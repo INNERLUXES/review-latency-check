@@ -1,0 +1,18 @@
+# Changes
+
+## 1.0.0
+
+First release.
+
+- Measures how long code reviews wait in a team spread over time zones, from pull request data saved from the GitHub REST API: the list of pull requests, the reviews of each and, when given, its issue events, put together in one JSON file. The tool calls no API and needs no token.
+- Three waits for every pull request: to the first review by a person of the team who is not the author, to the first approval, and to the merge. Each is counted on the clock on the wall and in working hours: those of the reviewer, the approver or the author, in their own time zone, from a team file of logins, IANA time zones and weekly hours in local time (split shifts and days off allowed).
+- A wait starts when the pull request is first ready for review: when it was opened, or at the ready_for_review event of a pull request opened as a draft. Time as a draft again, or closed before it was reopened, is not counted. Reviews by the author, by bots (user.type Bot, or a pattern of the configuration), reviews never submitted and reviews submitted before the pull was ready are not a first review.
+- A pull request with no review waited until it was closed, or until `--as-of` (latest, or a timestamp) when it is still open; its working wait counts the time in which at least one other person of the team was at work.
+- For every pair of author zone and reviewer zone, and for all pull requests together: the count, the median, an upper percentile (90 unless the configuration says otherwise) and the longest wait, all by the nearest-rank method, so every number is a wait that happened. There is no average.
+- One check with a limit that comes from the configuration only: a first review later than `firstReviewLimit.minutes`, in working or wall minutes. Exit code `0` when no pull request is past it, `1` when one is, `2` for a usage or input error, with no verdict.
+- Fails closed on input it cannot read: a missing or broken timestamp, a submitted review without submitted_at, a pull request whose reviews were not given, an unknown review state, times that contradict each other, issue events that contradict the pull request, an unknown time zone or a UTC offset, and a login outside the team unless the configuration says to leave it out.
+- Time zone math with the Intl API of Node only, with no copy of the time zone database, and one written rule for local times that the clocks skip or repeat. The tool reads no clock and makes no Date object; the same files give the same report under every time zone and locale of the machine.
+- Reports as text, Markdown and JSON; `--explain` shows the spans of time behind each number and the sentences the measures rest on. Moments are labelled without a year by default (`--time-labels date`), by their distance from the first day (`offset`), or as full timestamps (`iso`). Markdown cells are escaped and guarded against spreadsheet formulas. `--out` writes the report to a file and refuses an input as its path.
+- Logins only: the tool reads no title, body, name or email address of the input, and the reports show logins, time zones, pull request numbers and times. Strict JSON readers that refuse a repeated key everywhere and an unknown key in the team file, the configuration and the top level of the pull request file, with limits on every file and list.
+- Every quoted sentence comes from the GitHub REST API documentation, ECMA-402, the IANA time zone pages, RFC 3339 and RFC 8259, saved in `research/sources`; a test compares `src/data.js` and the documents with the saved text.
+- Release packages come with a CycloneDX SBOM, SHA-256 checksums and a build provenance attestation, after the SSDF gate of the repository.
