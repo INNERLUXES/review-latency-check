@@ -1,0 +1,21 @@
+# Every change is reviewed by a maintainer.
+* @innerluxesdev
+
+# The sentences come from the saved pages, and the readers, the time zone math, the measures and the reports decide
+# every number and what personal data is shown; changes need extra care.
+/src/data.js @innerluxesdev
+/research/ @innerluxesdev
+/src/files.js @innerluxesdev
+/src/json.js @innerluxesdev
+/src/strict.js @innerluxesdev
+/src/github.js @innerluxesdev
+/src/team.js @innerluxesdev
+/src/config.js @innerluxesdev
+/src/days.js @innerluxesdev
+/src/zones.js @innerluxesdev
+/src/hours.js @innerluxesdev
+/src/timeline.js @innerluxesdev
+/src/metrics.js @innerluxesdev
+/src/stats.js @innerluxesdev
+/src/check.js @innerluxesdev
+/src/report.js @innerluxesdev
