@@ -1,0 +1,99 @@
+Source: https://tc39.es/ecma402/
+
+ECMAScript Internationalization API Specification (ECMA-402), the draft published at tc39.es/ecma402
+
+6.5 Use of the IANA Time Zone Database
+
+Implementations that adopt this specification must be time zone aware: they must use the IANA Time Zone Database https://www.iana.org/time-zones/ to supply available named time zone identifiers and data used in ECMAScript calculations and formatting.
+This section defines how the IANA Time Zone Database should be used by time zone aware implementations.
+No String may be an available named time zone identifier unless it is a Zone name or a Link name in the IANA Time Zone Database.
+Available named time zone identifiers returned by ECMAScript built-in objects must use the casing found in the IANA Time Zone Database.
+
+Each Zone in the IANA Time Zone Database must be a primary time zone identifier and each Link name in the IANA Time Zone Database must be a non-primary time zone identifier that resolves to its corresponding Zone name, with the following exceptions implemented in AvailableNamedTimeZoneIdentifiers:
+
+    For historical reasons, "UTC" must be a primary time zone identifier.
+    "Etc/UTC", "Etc/GMT", and "GMT", as well as all Link names that resolve to any of them, must be non-primary time identifiers that resolve to "UTC".
+
+[...]
+
+The IANA Time Zone Database is typically updated between five and ten times per year.
+These updates may add new Zone or Link names, may change Zones to Links, and may change the UTC offsets and transitions associated with any Zone.
+Implementations are recommended to include updates to the IANA Time Zone Database as soon as possible.
+
+[...]
+
+6.5.1 AvailableNamedTimeZoneIdentifiers ( )
+
+The implementation-defined abstract operation AvailableNamedTimeZoneIdentifiers takes no arguments and returns a List of Time Zone Identifier Records.
+Its result describes all available named time zone identifiers in this implementation, as well as the primary time zone identifier corresponding to each available named time zone identifier.
+The List is ordered according to the [[Identifier]] field of each Time Zone Identifier Record.
+
+[...]
+
+Assert: result contains a Time Zone Identifier Record utcRecord such that utcRecord.[[Identifier]] is "UTC" and utcRecord.[[PrimaryIdentifier]] is "UTC".
+Return result.
+
+6.5.2 GetAvailableNamedTimeZoneIdentifier ( timeZoneIdentifier )
+
+The abstract operation GetAvailableNamedTimeZoneIdentifier takes argument timeZoneIdentifier (a String) and returns either a Time Zone Identifier Record or empty.
+If timeZoneIdentifier is an available named time zone identifier, then it returns one of the Records in the List returned by AvailableNamedTimeZoneIdentifiers.
+Otherwise, empty will be returned.
+It performs the following steps when called:
+
+For each element record of AvailableNamedTimeZoneIdentifiers(), do
+    If record.[[Identifier]] is an ASCII-case-insensitive match for timeZoneIdentifier, return record.
+Return empty.
+
+6.5.3 AvailablePrimaryTimeZoneIdentifiers ( )
+
+The abstract operation AvailablePrimaryTimeZoneIdentifiers takes no arguments and returns a List of Strings. The returned List is a sorted List of supported Zone and Link names in the IANA Time Zone Database. It performs the following steps when called:
+
+Let records be AvailableNamedTimeZoneIdentifiers().
+Let result be a new empty List.
+For each element timeZoneIdentifierRecord of records, do
+    If timeZoneIdentifierRecord.[[Identifier]] is timeZoneIdentifierRecord.[[PrimaryIdentifier]], then
+        Append timeZoneIdentifierRecord.[[Identifier]] to result.
+Return result.
+
+8.3.2 Intl.supportedValuesOf ( key )
+
+When the supportedValuesOf method is called with argument key , the following steps are taken:
+
+Set key to ? ToString(key).
+[...]
+Else if key is "timeZone", then
+    Let list be AvailablePrimaryTimeZoneIdentifiers( ).
+[...]
+Else,
+    Throw a RangeError exception.
+Return CreateArrayFromList( list ).
+
+11.1.2 CreateDateTimeFormat ( newTarget, locales, options, required, defaults )
+
+[...]
+Let timeZone be ? Get(options, "timeZone").
+If timeZone is undefined, then
+    Set timeZone to SystemTimeZoneIdentifier().
+Else,
+    Set timeZone to ? ToString(timeZone).
+If IsTimeZoneOffsetString(timeZone) is true, then
+    Let parseResult be ParseText(StringToCodePoints(timeZone), UTCOffset).
+    [...]
+Else,
+    Let timeZoneIdentifierRecord be GetAvailableNamedTimeZoneIdentifier(timeZone).
+    If timeZoneIdentifierRecord is empty, throw a RangeError exception.
+    Set timeZone to timeZoneIdentifierRecord.[[PrimaryIdentifier]].
+Set dateTimeFormat.[[TimeZone]] to timeZone.
+[...]
+
+11.3.6 Intl.DateTimeFormat.prototype.formatToParts ( date )
+
+When the formatToParts method is called with an argument date, the following steps are taken:
+
+Let dtf be the this value.
+Perform ? RequireInternalSlot(dtf, [[InitializedDateTimeFormat]]).
+If date is undefined, then
+    Let x be ! Call(%Date.now%, undefined).
+Else,
+    Let x be ? ToNumber(date).
+Return ? FormatDateTimeToParts(dtf, x).

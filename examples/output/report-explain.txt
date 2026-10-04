@@ -1,0 +1,448 @@
+review-latency-check: pulls.json, team team.json (Example platform team), configuration config.json
+team: 6 people in 3 time zones
+  anke-dev   Europe/Berlin     mon-fri 09:00-17:30
+  jonas-k    Europe/Berlin     mon-fri 08:00-16:30
+  ben-ny     America/New_York  mon-fri 09:00-17:00
+  maya-ny    America/New_York  mon-fri 08:30-12:30, 13:30-17:30
+  lucia-co   America/Bogota    mon-fri 08:00-12:00, 13:00-17:00
+  andres-co  America/Bogota    mon-fri 09:00-18:00
+limit: a first review within 4h 00m (240 minutes) of the working hours of the reviewer
+percentile: p90 and the median, both by the nearest-rank method
+bots: *[bot], release-helper and every account of type Bot
+data: day 0 (Mon) 08:30Z to day 32 (Fri) 18:00Z; open pull requests measured until --as-of day 32 (Fri) 18:00Z
+clock changes: America/New_York from UTC-05:00 to UTC-04:00 on day 6 (Sun); Europe/Berlin from UTC+01:00 to UTC+02:00 on day 27 (Sun)
+pulls: 40 read, 36 measured: 34 reviewed, 1 closed with no review, 1 open with no review; 33 approved, 33 merged; 4 left out
+
+Past the limit (6)
+
+  #111  jonas-k (Europe/Berlin), first review by ben-ny (America/New_York) at day 4 (Fri) 21:00Z      7h 00m on the wall, 7h 00m working
+  #116  jonas-k (Europe/Berlin), first review by anke-dev (Europe/Berlin) at day 8 (Tue) 12:30Z       4h 30m on the wall, 4h 30m working
+  #119  maya-ny (America/New_York), no review, closed at day 11 (Fri) 19:00Z                          47h 00m on the wall, 31h 00m working
+  #123  jonas-k (Europe/Berlin), first review by maya-ny (America/New_York) at day 14 (Mon) 13:00Z    70h 00m on the wall, 6h 00m working
+  #127  andres-co (America/Bogota), no review, still open at --as-of day 32 (Fri) 18:00Z              388h 00m on the wall, 189h 00m working
+  #138  maya-ny (America/New_York), first review by lucia-co (America/Bogota) at day 32 (Fri) 17:30Z  28h 30m on the wall, 12h 00m working
+
+First review by author zone and reviewer zone (wall / working hours of the reviewer)
+
+                                             wall                       working
+  author zone       reviewer zone     pulls  median   p90      max      median   p90      max
+  America/Bogota    America/Bogota    1      1h 40m   1h 40m   1h 40m   1h 10m   1h 10m   1h 10m
+  America/Bogota    America/New_York  4      0h 30m   16h 00m  16h 00m  0h 30m   1h 40m   1h 40m
+  America/Bogota    Europe/Berlin     5      16h 10m  59h 20m  59h 20m  0h 20m   1h 00m   1h 00m
+  America/New_York  America/Bogota    5      2h 00m   28h 30m  28h 30m  1h 30m   12h 00m  12h 00m
+  America/New_York  America/New_York  1      1h 30m   1h 30m   1h 30m   1h 30m   1h 30m   1h 30m
+  America/New_York  Europe/Berlin     5      16h 15m  18h 20m  18h 20m  1h 00m   2h 50m   2h 50m
+  Europe/Berlin     America/Bogota    3      3h 30m   7h 10m   7h 10m   0h 40m   1h 00m   1h 00m
+  Europe/Berlin     America/New_York  8      5h 50m   70h 00m  70h 00m  0h 20m   7h 00m   7h 00m
+  Europe/Berlin     Europe/Berlin     2      1h 30m   4h 30m   4h 30m   1h 00m   4h 30m   4h 30m
+
+Every measured pull together
+
+                                           wall                      working
+  wait            working hours of  pulls  median  p90      max      median   p90     max
+  first-review    the reviewer      34     4h 55m  28h 30m  70h 00m  1h 00m   4h 30m  12h 00m
+  first-approval  the approver      33     7h 30m  57h 10m  71h 00m  1h 30m   5h 00m  12h 00m
+  merge           the author        33     9h 00m  58h 00m  72h 00m  5h 00m   8h 00m  13h 00m
+
+Every pull (wall / working; * past the limit)
+
+  #101   anke-dev   ready day 0 (Mon) 08:30Z   review ben-ny 5h 50m / 0h 20m          approval 7h 30m / 2h 00m    merge 8h 00m / 8h 00m
+      ready for review and open: day 0 (Mon) 08:30Z-16:30Z
+      first review: ben-ny (America/New_York), COMMENTED, at day 0 (Mon) 14:20Z
+        on the wall: day 0 (Mon) 08:30Z-14:20Z = 5h 50m
+        working hours of ben-ny (America/New_York, UTC-05:00 at the start): day 0 (Mon) 14:00Z-14:20Z = 0h 20m
+      first approval: ben-ny (America/New_York) at day 0 (Mon) 16:00Z
+        on the wall: day 0 (Mon) 08:30Z-16:00Z = 7h 30m
+        working hours of ben-ny (America/New_York, UTC-05:00 at the start): day 0 (Mon) 14:00Z-16:00Z = 2h 00m
+      merge: at day 0 (Mon) 16:30Z
+        on the wall: day 0 (Mon) 08:30Z-16:30Z = 8h 00m
+        working hours of the author anke-dev (Europe/Berlin, UTC+01:00 at the start): day 0 (Mon) 08:30Z-16:30Z = 8h 00m
+  #102   ben-ny     ready day 0 (Mon) 15:00Z   review anke-dev 17h 40m / 2h 10m       approval 17h 40m / 2h 10m   merge 18h 00m / 7h 00m
+      ready for review and open: day 0 (Mon) 15:00Z-day 1 (Tue) 09:00Z
+      first review: anke-dev (Europe/Berlin), APPROVED, at day 1 (Tue) 08:40Z
+        on the wall: day 0 (Mon) 15:00Z-day 1 (Tue) 08:40Z = 17h 40m
+        working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 0 (Mon) 15:00Z-16:30Z, day 1 (Tue) 08:00Z-08:40Z = 2h 10m
+      first approval: anke-dev (Europe/Berlin) at day 1 (Tue) 08:40Z
+        on the wall: day 0 (Mon) 15:00Z-day 1 (Tue) 08:40Z = 17h 40m
+        working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 0 (Mon) 15:00Z-16:30Z, day 1 (Tue) 08:00Z-08:40Z = 2h 10m
+      merge: at day 1 (Tue) 09:00Z
+        on the wall: day 0 (Mon) 15:00Z-day 1 (Tue) 09:00Z = 18h 00m
+        working hours of the author ben-ny (America/New_York, UTC-05:00 at the start): day 0 (Mon) 15:00Z-22:00Z = 7h 00m
+  #103   lucia-co   ready day 0 (Mon) 13:30Z   review andres-co 1h 40m / 1h 10m       approval 1h 40m / 1h 10m    merge 2h 30m / 2h 30m
+      ready for review and open: day 0 (Mon) 13:30Z-16:00Z
+      first review: andres-co (America/Bogota), APPROVED, at day 0 (Mon) 15:10Z
+        on the wall: day 0 (Mon) 13:30Z-15:10Z = 1h 40m
+        working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 0 (Mon) 14:00Z-15:10Z = 1h 10m
+      first approval: andres-co (America/Bogota) at day 0 (Mon) 15:10Z
+        on the wall: day 0 (Mon) 13:30Z-15:10Z = 1h 40m
+        working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 0 (Mon) 14:00Z-15:10Z = 1h 10m
+      merge: at day 0 (Mon) 16:00Z
+        on the wall: day 0 (Mon) 13:30Z-16:00Z = 2h 30m
+        working hours of the author lucia-co (America/Bogota, UTC-05:00 at the start): day 0 (Mon) 13:30Z-16:00Z = 2h 30m
+  #104   jonas-k    ready day 1 (Tue) 07:30Z   review anke-dev 1h 30m / 1h 00m        approval 5h 30m / 5h 00m    merge 6h 00m / 6h 00m
+      ready for review and open: day 1 (Tue) 07:30Z-13:30Z
+      first review: anke-dev (Europe/Berlin), CHANGES_REQUESTED, at day 1 (Tue) 09:00Z
+        on the wall: day 1 (Tue) 07:30Z-09:00Z = 1h 30m
+        working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 1 (Tue) 08:00Z-09:00Z = 1h 00m
+      first approval: anke-dev (Europe/Berlin) at day 1 (Tue) 13:00Z
+        on the wall: day 1 (Tue) 07:30Z-13:00Z = 5h 30m
+        working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 1 (Tue) 08:00Z-13:00Z = 5h 00m
+      merge: at day 1 (Tue) 13:30Z
+        on the wall: day 1 (Tue) 07:30Z-13:30Z = 6h 00m
+        working hours of the author jonas-k (Europe/Berlin, UTC+01:00 at the start): day 1 (Tue) 07:30Z-13:30Z = 6h 00m
+  #105   maya-ny    ready day 1 (Tue) 21:00Z   review jonas-k 10h 45m / 0h 45m        approval 10h 45m / 0h 45m   merge 17h 00m / 2h 00m
+      ready for review and open: day 1 (Tue) 21:00Z-day 2 (Wed) 14:00Z
+      first review: jonas-k (Europe/Berlin), APPROVED, at day 2 (Wed) 07:45Z
+        on the wall: day 1 (Tue) 21:00Z-day 2 (Wed) 07:45Z = 10h 45m
+        working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 2 (Wed) 07:00Z-07:45Z = 0h 45m
+      first approval: jonas-k (Europe/Berlin) at day 2 (Wed) 07:45Z
+        on the wall: day 1 (Tue) 21:00Z-day 2 (Wed) 07:45Z = 10h 45m
+        working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 2 (Wed) 07:00Z-07:45Z = 0h 45m
+      merge: at day 2 (Wed) 14:00Z
+        on the wall: day 1 (Tue) 21:00Z-day 2 (Wed) 14:00Z = 17h 00m
+        working hours of the author maya-ny (America/New_York, UTC-05:00 at the start): day 1 (Tue) 21:00Z-22:30Z, day 2 (Wed) 13:30Z-14:00Z = 2h 00m
+  #106   andres-co  ready day 1 (Tue) 22:30Z   review ben-ny 16h 00m / 0h 30m         approval 16h 00m / 0h 30m   merge 16h 30m / 1h 30m
+      ready for review and open: day 1 (Tue) 22:30Z-day 2 (Wed) 15:00Z
+      first review: ben-ny (America/New_York), APPROVED, at day 2 (Wed) 14:30Z
+        on the wall: day 1 (Tue) 22:30Z-day 2 (Wed) 14:30Z = 16h 00m
+        working hours of ben-ny (America/New_York, UTC-05:00 at the start): day 2 (Wed) 14:00Z-14:30Z = 0h 30m
+      first approval: ben-ny (America/New_York) at day 2 (Wed) 14:30Z
+        on the wall: day 1 (Tue) 22:30Z-day 2 (Wed) 14:30Z = 16h 00m
+        working hours of ben-ny (America/New_York, UTC-05:00 at the start): day 2 (Wed) 14:00Z-14:30Z = 0h 30m
+      merge: at day 2 (Wed) 15:00Z
+        on the wall: day 1 (Tue) 22:30Z-day 2 (Wed) 15:00Z = 16h 30m
+        working hours of the author andres-co (America/Bogota, UTC-05:00 at the start): day 1 (Tue) 22:30Z-23:00Z, day 2 (Wed) 14:00Z-15:00Z = 1h 30m
+  #107   anke-dev   ready day 2 (Wed) 13:00Z   review maya-ny 2h 00m / 1h 30m         approval 2h 00m / 1h 30m    merge 2h 30m / 2h 30m
+      ready for review and open: day 2 (Wed) 13:00Z-15:30Z
+      first review: maya-ny (America/New_York), APPROVED, at day 2 (Wed) 15:00Z
+        on the wall: day 2 (Wed) 13:00Z-15:00Z = 2h 00m
+        working hours of maya-ny (America/New_York, UTC-05:00 at the start): day 2 (Wed) 13:30Z-15:00Z = 1h 30m
+      first approval: maya-ny (America/New_York) at day 2 (Wed) 15:00Z
+        on the wall: day 2 (Wed) 13:00Z-15:00Z = 2h 00m
+        working hours of maya-ny (America/New_York, UTC-05:00 at the start): day 2 (Wed) 13:30Z-15:00Z = 1h 30m
+      merge: at day 2 (Wed) 15:30Z
+        on the wall: day 2 (Wed) 13:00Z-15:30Z = 2h 30m
+        working hours of the author anke-dev (Europe/Berlin, UTC+01:00 at the start): day 2 (Wed) 13:00Z-15:30Z = 2h 30m
+  #108   ben-ny     ready day 3 (Thu) 14:30Z   review lucia-co 1h 30m / 1h 30m        approval 2h 30m / 2h 30m    merge 3h 30m / 3h 30m
+      ready for review and open: day 3 (Thu) 14:30Z-18:00Z
+      first review: lucia-co (America/Bogota), COMMENTED, at day 3 (Thu) 16:00Z
+        on the wall: day 3 (Thu) 14:30Z-16:00Z = 1h 30m
+        working hours of lucia-co (America/Bogota, UTC-05:00 at the start): day 3 (Thu) 14:30Z-16:00Z = 1h 30m
+      first approval: andres-co (America/Bogota) at day 3 (Thu) 17:00Z
+        on the wall: day 3 (Thu) 14:30Z-17:00Z = 2h 30m
+        working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 3 (Thu) 14:30Z-17:00Z = 2h 30m
+      merge: at day 3 (Thu) 18:00Z
+        on the wall: day 3 (Thu) 14:30Z-18:00Z = 3h 30m
+        working hours of the author ben-ny (America/New_York, UTC-05:00 at the start): day 3 (Thu) 14:30Z-18:00Z = 3h 30m
+  #110   lucia-co   ready day 4 (Fri) 20:00Z   review jonas-k 59h 20m / 0h 20m        approval 59h 20m / 0h 20m   merge 60h 00m / 2h 00m
+      ready for review and open: day 4 (Fri) 20:00Z-day 7 (Mon) 08:00Z
+      first review: jonas-k (Europe/Berlin), APPROVED, at day 7 (Mon) 07:20Z
+        on the wall: day 4 (Fri) 20:00Z-day 7 (Mon) 07:20Z = 59h 20m
+        working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 7 (Mon) 07:00Z-07:20Z = 0h 20m
+      first approval: jonas-k (Europe/Berlin) at day 7 (Mon) 07:20Z
+        on the wall: day 4 (Fri) 20:00Z-day 7 (Mon) 07:20Z = 59h 20m
+        working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 7 (Mon) 07:00Z-07:20Z = 0h 20m
+      merge: at day 7 (Mon) 08:00Z
+        on the wall: day 4 (Fri) 20:00Z-day 7 (Mon) 08:00Z = 60h 00m
+        working hours of the author lucia-co (America/Bogota, UTC-05:00 at the start): day 4 (Fri) 20:00Z-22:00Z = 2h 00m
+  #111*  jonas-k    ready day 4 (Fri) 14:00Z   review ben-ny 7h 00m / 7h 00m          approval 66h 30m / 3h 00m   merge 67h 00m / 3h 30m
+      ready for review and open: day 4 (Fri) 14:00Z-day 7 (Mon) 09:00Z
+      first review: ben-ny (America/New_York), COMMENTED, at day 4 (Fri) 21:00Z
+        on the wall: day 4 (Fri) 14:00Z-21:00Z = 7h 00m
+        working hours of ben-ny (America/New_York, UTC-05:00 at the start): day 4 (Fri) 14:00Z-21:00Z = 7h 00m
+      first approval: anke-dev (Europe/Berlin) at day 7 (Mon) 08:30Z
+        on the wall: day 4 (Fri) 14:00Z-day 7 (Mon) 08:30Z = 66h 30m
+        working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 4 (Fri) 14:00Z-16:30Z, day 7 (Mon) 08:00Z-08:30Z = 3h 00m
+      merge: at day 7 (Mon) 09:00Z
+        on the wall: day 4 (Fri) 14:00Z-day 7 (Mon) 09:00Z = 67h 00m
+        working hours of the author jonas-k (Europe/Berlin, UTC+01:00 at the start): day 4 (Fri) 14:00Z-15:30Z, day 7 (Mon) 07:00Z-09:00Z = 3h 30m
+  #112   maya-ny    ready day 7 (Mon) 13:00Z   review andres-co 2h 00m / 1h 00m       approval 2h 00m / 1h 00m    merge 3h 00m / 3h 00m
+      ready for review and open: day 7 (Mon) 13:00Z-16:00Z
+      first review: andres-co (America/Bogota), APPROVED, at day 7 (Mon) 15:00Z
+        on the wall: day 7 (Mon) 13:00Z-15:00Z = 2h 00m
+        working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 7 (Mon) 14:00Z-15:00Z = 1h 00m
+      first approval: andres-co (America/Bogota) at day 7 (Mon) 15:00Z
+        on the wall: day 7 (Mon) 13:00Z-15:00Z = 2h 00m
+        working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 7 (Mon) 14:00Z-15:00Z = 1h 00m
+      merge: at day 7 (Mon) 16:00Z
+        on the wall: day 7 (Mon) 13:00Z-16:00Z = 3h 00m
+        working hours of the author maya-ny (America/New_York, UTC-04:00 at the start): day 7 (Mon) 13:00Z-16:00Z = 3h 00m
+  #113   anke-dev   ready day 7 (Mon) 10:00Z   review lucia-co 3h 30m / 0h 30m        approval 28h 00m / 9h 00m   merge 28h 30m / 13h 00m
+      ready for review and open: day 7 (Mon) 10:00Z-day 8 (Tue) 14:30Z
+      first review: lucia-co (America/Bogota), CHANGES_REQUESTED, at day 7 (Mon) 13:30Z
+        on the wall: day 7 (Mon) 10:00Z-13:30Z = 3h 30m
+        working hours of lucia-co (America/Bogota, UTC-05:00 at the start): day 7 (Mon) 13:00Z-13:30Z = 0h 30m
+      first approval: lucia-co (America/Bogota) at day 8 (Tue) 14:00Z
+        on the wall: day 7 (Mon) 10:00Z-day 8 (Tue) 14:00Z = 28h 00m
+        working hours of lucia-co (America/Bogota, UTC-05:00 at the start): day 7 (Mon) 13:00Z-17:00Z, day 7 (Mon) 18:00Z-22:00Z, day 8 (Tue) 13:00Z-14:00Z = 9h 00m
+      merge: at day 8 (Tue) 14:30Z
+        on the wall: day 7 (Mon) 10:00Z-day 8 (Tue) 14:30Z = 28h 30m
+        working hours of the author anke-dev (Europe/Berlin, UTC+01:00 at the start): day 7 (Mon) 10:00Z-16:30Z, day 8 (Tue) 08:00Z-14:30Z = 13h 00m
+  #114   andres-co  ready day 7 (Mon) 16:00Z   review anke-dev 16h 10m / 0h 40m       approval 17h 00m / 2h 00m   merge 18h 00m / 7h 00m
+      ready for review and open: day 7 (Mon) 16:00Z-day 8 (Tue) 10:00Z
+      first review: anke-dev (Europe/Berlin), COMMENTED, at day 8 (Tue) 08:10Z
+        on the wall: day 7 (Mon) 16:00Z-day 8 (Tue) 08:10Z = 16h 10m
+        working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 7 (Mon) 16:00Z-16:30Z, day 8 (Tue) 08:00Z-08:10Z = 0h 40m
+      first approval: jonas-k (Europe/Berlin) at day 8 (Tue) 09:00Z
+        on the wall: day 7 (Mon) 16:00Z-day 8 (Tue) 09:00Z = 17h 00m
+        working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 8 (Tue) 07:00Z-09:00Z = 2h 00m
+      merge: at day 8 (Tue) 10:00Z
+        on the wall: day 7 (Mon) 16:00Z-day 8 (Tue) 10:00Z = 18h 00m
+        working hours of the author andres-co (America/Bogota, UTC-05:00 at the start): day 7 (Mon) 16:00Z-23:00Z = 7h 00m
+  #115   ben-ny     ready day 8 (Tue) 13:30Z   review maya-ny 1h 30m / 1h 30m         approval 1h 30m / 1h 30m    merge 2h 30m / 2h 30m
+      ready for review and open: day 8 (Tue) 13:30Z-14:00Z, day 9 (Wed) 13:00Z-15:00Z
+      first review: maya-ny (America/New_York), APPROVED, at day 9 (Wed) 14:00Z
+        on the wall: day 8 (Tue) 13:30Z-14:00Z, day 9 (Wed) 13:00Z-14:00Z = 1h 30m
+        working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 8 (Tue) 13:30Z-14:00Z, day 9 (Wed) 13:00Z-14:00Z = 1h 30m
+      first approval: maya-ny (America/New_York) at day 9 (Wed) 14:00Z
+        on the wall: day 8 (Tue) 13:30Z-14:00Z, day 9 (Wed) 13:00Z-14:00Z = 1h 30m
+        working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 8 (Tue) 13:30Z-14:00Z, day 9 (Wed) 13:00Z-14:00Z = 1h 30m
+      merge: at day 9 (Wed) 15:00Z
+        on the wall: day 8 (Tue) 13:30Z-14:00Z, day 9 (Wed) 13:00Z-15:00Z = 2h 30m
+        working hours of the author ben-ny (America/New_York, UTC-04:00 at the start): day 8 (Tue) 13:30Z-14:00Z, day 9 (Wed) 13:00Z-15:00Z = 2h 30m
+  #116*  jonas-k    ready day 8 (Tue) 08:00Z   review anke-dev 4h 30m / 4h 30m        approval 4h 30m / 4h 30m    merge 5h 00m / 5h 00m
+      ready for review and open: day 8 (Tue) 08:00Z-13:00Z
+      first review: anke-dev (Europe/Berlin), APPROVED, at day 8 (Tue) 12:30Z
+        on the wall: day 8 (Tue) 08:00Z-12:30Z = 4h 30m
+        working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 8 (Tue) 08:00Z-12:30Z = 4h 30m
+      first approval: anke-dev (Europe/Berlin) at day 8 (Tue) 12:30Z
+        on the wall: day 8 (Tue) 08:00Z-12:30Z = 4h 30m
+        working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 8 (Tue) 08:00Z-12:30Z = 4h 30m
+      merge: at day 8 (Tue) 13:00Z
+        on the wall: day 8 (Tue) 08:00Z-13:00Z = 5h 00m
+        working hours of the author jonas-k (Europe/Berlin, UTC+01:00 at the start): day 8 (Tue) 08:00Z-13:00Z = 5h 00m
+  #118   lucia-co   ready day 9 (Wed) 13:10Z   review ben-ny 0h 30m / 0h 30m          approval 0h 30m / 0h 30m    merge 0h 50m / 0h 50m
+      ready for review and open: day 9 (Wed) 13:10Z-14:00Z
+      first review: ben-ny (America/New_York), APPROVED, at day 9 (Wed) 13:40Z
+        on the wall: day 9 (Wed) 13:10Z-13:40Z = 0h 30m
+        working hours of ben-ny (America/New_York, UTC-04:00 at the start): day 9 (Wed) 13:10Z-13:40Z = 0h 30m
+      first approval: ben-ny (America/New_York) at day 9 (Wed) 13:40Z
+        on the wall: day 9 (Wed) 13:10Z-13:40Z = 0h 30m
+        working hours of ben-ny (America/New_York, UTC-04:00 at the start): day 9 (Wed) 13:10Z-13:40Z = 0h 30m
+      merge: at day 9 (Wed) 14:00Z
+        on the wall: day 9 (Wed) 13:10Z-14:00Z = 0h 50m
+        working hours of the author lucia-co (America/Bogota, UTC-05:00 at the start): day 9 (Wed) 13:10Z-14:00Z = 0h 50m
+  #119*  maya-ny    ready day 9 (Wed) 20:00Z   review none, closed 47h 00m / 31h 00m  approval -                  merge -
+      ready for review and open: day 9 (Wed) 20:00Z-day 11 (Fri) 19:00Z
+      first review: none; waited until it was closed at day 11 (Fri) 19:00Z
+        on the wall: day 9 (Wed) 20:00Z-day 11 (Fri) 19:00Z = 47h 00m
+        working hours of at least one other person of the team: day 9 (Wed) 20:00Z-23:00Z, day 10 (Thu) 07:00Z-23:00Z, day 11 (Fri) 07:00Z-19:00Z = 31h 00m
+  #120   anke-dev   ready day 10 (Thu) 08:15Z  review ben-ny 4h 55m / 0h 10m          approval 4h 55m / 0h 10m    merge 5h 15m / 5h 15m
+      ready for review and open: day 10 (Thu) 08:15Z-13:30Z
+      first review: ben-ny (America/New_York), APPROVED, at day 10 (Thu) 13:10Z
+        on the wall: day 10 (Thu) 08:15Z-13:10Z = 4h 55m
+        working hours of ben-ny (America/New_York, UTC-04:00 at the start): day 10 (Thu) 13:00Z-13:10Z = 0h 10m
+      first approval: ben-ny (America/New_York) at day 10 (Thu) 13:10Z
+        on the wall: day 10 (Thu) 08:15Z-13:10Z = 4h 55m
+        working hours of ben-ny (America/New_York, UTC-04:00 at the start): day 10 (Thu) 13:00Z-13:10Z = 0h 10m
+      merge: at day 10 (Thu) 13:30Z
+        on the wall: day 10 (Thu) 08:15Z-13:30Z = 5h 15m
+        working hours of the author anke-dev (Europe/Berlin, UTC+01:00 at the start): day 10 (Thu) 08:15Z-13:30Z = 5h 15m
+  #121   andres-co  ready day 10 (Thu) 21:00Z  review jonas-k 10h 10m / 0h 10m        approval 10h 10m / 0h 10m   merge 11h 00m / 2h 00m
+      ready for review and open: day 10 (Thu) 21:00Z-day 11 (Fri) 08:00Z
+      first review: jonas-k (Europe/Berlin), APPROVED, at day 11 (Fri) 07:10Z
+        on the wall: day 10 (Thu) 21:00Z-day 11 (Fri) 07:10Z = 10h 10m
+        working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 11 (Fri) 07:00Z-07:10Z = 0h 10m
+      first approval: jonas-k (Europe/Berlin) at day 11 (Fri) 07:10Z
+        on the wall: day 10 (Thu) 21:00Z-day 11 (Fri) 07:10Z = 10h 10m
+        working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 11 (Fri) 07:00Z-07:10Z = 0h 10m
+      merge: at day 11 (Fri) 08:00Z
+        on the wall: day 10 (Thu) 21:00Z-day 11 (Fri) 08:00Z = 11h 00m
+        working hours of the author andres-co (America/Bogota, UTC-05:00 at the start): day 10 (Thu) 21:00Z-23:00Z = 2h 00m
+  #122   ben-ny     ready day 11 (Fri) 12:00Z  review lucia-co 2h 00m / 1h 00m        approval 2h 30m / 2h 30m    merge 3h 00m / 2h 00m
+      ready for review and open: day 11 (Fri) 12:00Z-15:00Z
+      first review: lucia-co (America/Bogota), COMMENTED, at day 11 (Fri) 14:00Z
+        on the wall: day 11 (Fri) 12:00Z-14:00Z = 2h 00m
+        working hours of lucia-co (America/Bogota, UTC-05:00 at the start): day 11 (Fri) 13:00Z-14:00Z = 1h 00m
+      first approval: anke-dev (Europe/Berlin) at day 11 (Fri) 14:30Z
+        on the wall: day 11 (Fri) 12:00Z-14:30Z = 2h 30m
+        working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 11 (Fri) 12:00Z-14:30Z = 2h 30m
+      merge: at day 11 (Fri) 15:00Z
+        on the wall: day 11 (Fri) 12:00Z-15:00Z = 3h 00m
+        working hours of the author ben-ny (America/New_York, UTC-04:00 at the start): day 11 (Fri) 13:00Z-15:00Z = 2h 00m
+  #123*  jonas-k    ready day 11 (Fri) 15:00Z  review maya-ny 70h 00m / 6h 00m        approval 71h 00m / 7h 00m   merge 72h 00m / 8h 30m
+      ready for review and open: day 11 (Fri) 15:00Z-day 14 (Mon) 15:00Z
+      first review: maya-ny (America/New_York), COMMENTED, at day 14 (Mon) 13:00Z
+        on the wall: day 11 (Fri) 15:00Z-day 14 (Mon) 13:00Z = 70h 00m
+        working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 11 (Fri) 15:00Z-16:30Z, day 11 (Fri) 17:30Z-21:30Z, day 14 (Mon) 12:30Z-13:00Z = 6h 00m
+      first approval: maya-ny (America/New_York) at day 14 (Mon) 14:00Z
+        on the wall: day 11 (Fri) 15:00Z-day 14 (Mon) 14:00Z = 71h 00m
+        working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 11 (Fri) 15:00Z-16:30Z, day 11 (Fri) 17:30Z-21:30Z, day 14 (Mon) 12:30Z-14:00Z = 7h 00m
+      merge: at day 14 (Mon) 15:00Z
+        on the wall: day 11 (Fri) 15:00Z-day 14 (Mon) 15:00Z = 72h 00m
+        working hours of the author jonas-k (Europe/Berlin, UTC+01:00 at the start): day 11 (Fri) 15:00Z-15:30Z, day 14 (Mon) 07:00Z-15:00Z = 8h 30m
+  #124   lucia-co   ready day 14 (Mon) 13:20Z  review ben-ny 1h 40m / 1h 40m          approval 19h 40m / 4h 10m   merge 20h 40m / 7h 40m
+      ready for review and open: day 14 (Mon) 13:20Z-day 15 (Tue) 10:00Z
+      first review: ben-ny (America/New_York), CHANGES_REQUESTED, at day 14 (Mon) 15:00Z
+        on the wall: day 14 (Mon) 13:20Z-15:00Z = 1h 40m
+        working hours of ben-ny (America/New_York, UTC-04:00 at the start): day 14 (Mon) 13:20Z-15:00Z = 1h 40m
+      first approval: jonas-k (Europe/Berlin) at day 15 (Tue) 09:00Z
+        on the wall: day 14 (Mon) 13:20Z-day 15 (Tue) 09:00Z = 19h 40m
+        working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 14 (Mon) 13:20Z-15:30Z, day 15 (Tue) 07:00Z-09:00Z = 4h 10m
+      merge: at day 15 (Tue) 10:00Z
+        on the wall: day 14 (Mon) 13:20Z-day 15 (Tue) 10:00Z = 20h 40m
+        working hours of the author lucia-co (America/Bogota, UTC-05:00 at the start): day 14 (Mon) 13:20Z-17:00Z, day 14 (Mon) 18:00Z-22:00Z = 7h 40m
+  #125   maya-ny    ready day 14 (Mon) 13:00Z  review andres-co 6h 00m / 4h 00m       approval 6h 00m / 4h 00m    merge 7h 00m / 6h 00m
+      ready for review and open: day 14 (Mon) 13:00Z-18:00Z, day 15 (Tue) 13:00Z-15:00Z
+      first review: andres-co (America/Bogota), APPROVED, at day 15 (Tue) 14:00Z
+        on the wall: day 14 (Mon) 13:00Z-18:00Z, day 15 (Tue) 13:00Z-14:00Z = 6h 00m
+        working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 14 (Mon) 14:00Z-18:00Z = 4h 00m
+      first approval: andres-co (America/Bogota) at day 15 (Tue) 14:00Z
+        on the wall: day 14 (Mon) 13:00Z-18:00Z, day 15 (Tue) 13:00Z-14:00Z = 6h 00m
+        working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 14 (Mon) 14:00Z-18:00Z = 4h 00m
+      merge: at day 15 (Tue) 15:00Z
+        on the wall: day 14 (Mon) 13:00Z-18:00Z, day 15 (Tue) 13:00Z-15:00Z = 7h 00m
+        working hours of the author maya-ny (America/New_York, UTC-04:00 at the start): day 14 (Mon) 13:00Z-16:30Z, day 14 (Mon) 17:30Z-18:00Z, day 15 (Tue) 13:00Z-15:00Z = 6h 00m
+  #126   anke-dev   ready day 15 (Tue) 08:00Z  review maya-ny 4h 40m / 0h 10m         approval 4h 40m / 0h 10m    merge 5h 00m / 5h 00m
+      ready for review and open: day 15 (Tue) 08:00Z-13:00Z
+      first review: maya-ny (America/New_York), APPROVED, at day 15 (Tue) 12:40Z
+        on the wall: day 15 (Tue) 08:00Z-12:40Z = 4h 40m
+        working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 15 (Tue) 12:30Z-12:40Z = 0h 10m
+      first approval: maya-ny (America/New_York) at day 15 (Tue) 12:40Z
+        on the wall: day 15 (Tue) 08:00Z-12:40Z = 4h 40m
+        working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 15 (Tue) 12:30Z-12:40Z = 0h 10m
+      merge: at day 15 (Tue) 13:00Z
+        on the wall: day 15 (Tue) 08:00Z-13:00Z = 5h 00m
+        working hours of the author anke-dev (Europe/Berlin, UTC+01:00 at the start): day 15 (Tue) 08:00Z-13:00Z = 5h 00m
+  #127*  andres-co  ready day 16 (Wed) 14:00Z  review none, open 388h 00m / 189h 00m  approval -                  merge -
+      ready for review and open: from day 16 (Wed) 14:00Z, still open
+      first review: none; waited until --as-of at day 32 (Fri) 18:00Z
+        on the wall: day 16 (Wed) 14:00Z-day 32 (Fri) 18:00Z = 388h 00m
+        working hours of at least one other person of the team: day 16 (Wed) 14:00Z-22:00Z, day 17 (Thu) 07:00Z-22:00Z, day 18 (Fri) 07:00Z-22:00Z, day 21 (Mon) 07:00Z-22:00Z, day 22 (Tue) 07:00Z-22:00Z, day 23 (Wed) 07:00Z-22:00Z, day 24 (Thu) 07:00Z-22:00Z, day 25 (Fri) 07:00Z-22:00Z, day 28 (Mon) 06:00Z-22:00Z, day 29 (Tue) 06:00Z-22:00Z, day 30 (Wed) 06:00Z-22:00Z, day 31 (Thu) 06:00Z-22:00Z, day 32 (Fri) 06:00Z-18:00Z = 189h 00m
+  #129   ben-ny     ready day 17 (Thu) 13:00Z  review anke-dev 1h 00m / 1h 00m        approval 19h 20m / 3h 50m   merge 20h 00m / 8h 00m
+      ready for review and open: day 17 (Thu) 13:00Z-day 18 (Fri) 09:00Z
+      first review: anke-dev (Europe/Berlin), COMMENTED, at day 17 (Thu) 14:00Z
+        on the wall: day 17 (Thu) 13:00Z-14:00Z = 1h 00m
+        working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 17 (Thu) 13:00Z-14:00Z = 1h 00m
+      first approval: anke-dev (Europe/Berlin) at day 18 (Fri) 08:20Z
+        on the wall: day 17 (Thu) 13:00Z-day 18 (Fri) 08:20Z = 19h 20m
+        working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 17 (Thu) 13:00Z-16:30Z, day 18 (Fri) 08:00Z-08:20Z = 3h 50m
+      merge: at day 18 (Fri) 09:00Z
+        on the wall: day 17 (Thu) 13:00Z-day 18 (Fri) 09:00Z = 20h 00m
+        working hours of the author ben-ny (America/New_York, UTC-04:00 at the start): day 17 (Thu) 13:00Z-21:00Z = 8h 00m
+  #131   lucia-co   ready day 21 (Mon) 13:00Z  review maya-ny 0h 30m / 0h 30m         approval 0h 30m / 0h 30m    merge 1h 00m / 1h 00m
+      ready for review and open: day 21 (Mon) 13:00Z-14:00Z
+      first review: maya-ny (America/New_York), APPROVED, at day 21 (Mon) 13:30Z
+        on the wall: day 21 (Mon) 13:00Z-13:30Z = 0h 30m
+        working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 21 (Mon) 13:00Z-13:30Z = 0h 30m
+      first approval: maya-ny (America/New_York) at day 21 (Mon) 13:30Z
+        on the wall: day 21 (Mon) 13:00Z-13:30Z = 0h 30m
+        working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 21 (Mon) 13:00Z-13:30Z = 0h 30m
+      merge: at day 21 (Mon) 14:00Z
+        on the wall: day 21 (Mon) 13:00Z-14:00Z = 1h 00m
+        working hours of the author lucia-co (America/Bogota, UTC-05:00 at the start): day 21 (Mon) 13:00Z-14:00Z = 1h 00m
+  #132   anke-dev   ready day 22 (Tue) 15:00Z  review andres-co 1h 00m / 1h 00m       approval 1h 30m / 1h 30m    merge 17h 00m / 1h 30m
+      ready for review and open: day 22 (Tue) 15:00Z-day 23 (Wed) 08:00Z
+      first review: andres-co (America/Bogota), COMMENTED, at day 22 (Tue) 16:00Z
+        on the wall: day 22 (Tue) 15:00Z-16:00Z = 1h 00m
+        working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 22 (Tue) 15:00Z-16:00Z = 1h 00m
+      first approval: lucia-co (America/Bogota) at day 22 (Tue) 16:30Z
+        on the wall: day 22 (Tue) 15:00Z-16:30Z = 1h 30m
+        working hours of lucia-co (America/Bogota, UTC-05:00 at the start): day 22 (Tue) 15:00Z-16:30Z = 1h 30m
+      merge: at day 23 (Wed) 08:00Z
+        on the wall: day 22 (Tue) 15:00Z-day 23 (Wed) 08:00Z = 17h 00m
+        working hours of the author anke-dev (Europe/Berlin, UTC+01:00 at the start): day 22 (Tue) 15:00Z-16:30Z = 1h 30m
+  #133   maya-ny    ready day 23 (Wed) 12:45Z  review jonas-k 18h 20m / 2h 50m        approval 19h 15m / 3h 45m   merge 19h 45m / 7h 45m
+      ready for review and open: day 23 (Wed) 12:45Z-day 24 (Thu) 08:30Z (no issue events given)
+      first review: jonas-k (Europe/Berlin), COMMENTED, at day 24 (Thu) 07:05Z
+        on the wall: day 23 (Wed) 12:45Z-day 24 (Thu) 07:05Z = 18h 20m
+        working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 23 (Wed) 12:45Z-15:30Z, day 24 (Thu) 07:00Z-07:05Z = 2h 50m
+      first approval: anke-dev (Europe/Berlin) at day 24 (Thu) 08:00Z
+        on the wall: day 23 (Wed) 12:45Z-day 24 (Thu) 08:00Z = 19h 15m
+        working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 23 (Wed) 12:45Z-16:30Z = 3h 45m
+      merge: at day 24 (Thu) 08:30Z
+        on the wall: day 23 (Wed) 12:45Z-day 24 (Thu) 08:30Z = 19h 45m
+        working hours of the author maya-ny (America/New_York, UTC-04:00 at the start): day 23 (Wed) 12:45Z-16:30Z, day 23 (Wed) 17:30Z-21:30Z = 7h 45m
+  #134   andres-co  ready day 25 (Fri) 22:00Z  review anke-dev 57h 10m / 0h 10m       approval 57h 10m / 0h 10m   merge 58h 00m / 1h 00m
+      ready for review and open: day 25 (Fri) 22:00Z-day 28 (Mon) 08:00Z
+      first review: anke-dev (Europe/Berlin), APPROVED, at day 28 (Mon) 07:10Z
+        on the wall: day 25 (Fri) 22:00Z-day 28 (Mon) 07:10Z = 57h 10m
+        working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 28 (Mon) 07:00Z-07:10Z = 0h 10m
+      first approval: anke-dev (Europe/Berlin) at day 28 (Mon) 07:10Z
+        on the wall: day 25 (Fri) 22:00Z-day 28 (Mon) 07:10Z = 57h 10m
+        working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 28 (Mon) 07:00Z-07:10Z = 0h 10m
+      merge: at day 28 (Mon) 08:00Z
+        on the wall: day 25 (Fri) 22:00Z-day 28 (Mon) 08:00Z = 58h 00m
+        working hours of the author andres-co (America/Bogota, UTC-05:00 at the start): day 25 (Fri) 22:00Z-23:00Z = 1h 00m
+  #135   jonas-k    ready day 28 (Mon) 06:30Z  review ben-ny 6h 50m / 0h 20m          approval 8h 30m / 2h 00m    merge 9h 00m / 8h 00m
+      ready for review and open: day 28 (Mon) 06:30Z-15:30Z
+      first review: ben-ny (America/New_York), COMMENTED, at day 28 (Mon) 13:20Z
+        on the wall: day 28 (Mon) 06:30Z-13:20Z = 6h 50m
+        working hours of ben-ny (America/New_York, UTC-04:00 at the start): day 28 (Mon) 13:00Z-13:20Z = 0h 20m
+      first approval: ben-ny (America/New_York) at day 28 (Mon) 15:00Z
+        on the wall: day 28 (Mon) 06:30Z-15:00Z = 8h 30m
+        working hours of ben-ny (America/New_York, UTC-04:00 at the start): day 28 (Mon) 13:00Z-15:00Z = 2h 00m
+      merge: at day 28 (Mon) 15:30Z
+        on the wall: day 28 (Mon) 06:30Z-15:30Z = 9h 00m
+        working hours of the author jonas-k (Europe/Berlin, UTC+02:00 at the start): day 28 (Mon) 06:30Z-14:30Z = 8h 00m
+  #136   ben-ny     ready day 29 (Tue) 14:00Z  review jonas-k 16h 15m / 0h 45m        approval 16h 15m / 0h 45m   merge 17h 00m / 7h 00m
+      ready for review and open: day 29 (Tue) 14:00Z-day 30 (Wed) 07:00Z
+      first review: jonas-k (Europe/Berlin), APPROVED, at day 30 (Wed) 06:15Z
+        on the wall: day 29 (Tue) 14:00Z-day 30 (Wed) 06:15Z = 16h 15m
+        working hours of jonas-k (Europe/Berlin, UTC+02:00 at the start): day 29 (Tue) 14:00Z-14:30Z, day 30 (Wed) 06:00Z-06:15Z = 0h 45m
+      first approval: jonas-k (Europe/Berlin) at day 30 (Wed) 06:15Z
+        on the wall: day 29 (Tue) 14:00Z-day 30 (Wed) 06:15Z = 16h 15m
+        working hours of jonas-k (Europe/Berlin, UTC+02:00 at the start): day 29 (Tue) 14:00Z-14:30Z, day 30 (Wed) 06:00Z-06:15Z = 0h 45m
+      merge: at day 30 (Wed) 07:00Z
+        on the wall: day 29 (Tue) 14:00Z-day 30 (Wed) 07:00Z = 17h 00m
+        working hours of the author ben-ny (America/New_York, UTC-04:00 at the start): day 29 (Tue) 14:00Z-21:00Z = 7h 00m
+  #137   lucia-co   ready day 30 (Wed) 13:00Z  review anke-dev 1h 00m / 1h 00m        approval 2h 00m / 1h 00m    merge 3h 00m / 3h 00m
+      ready for review and open: day 30 (Wed) 13:00Z-16:00Z
+      first review: anke-dev (Europe/Berlin), COMMENTED, at day 30 (Wed) 14:00Z
+        on the wall: day 30 (Wed) 13:00Z-14:00Z = 1h 00m
+        working hours of anke-dev (Europe/Berlin, UTC+02:00 at the start): day 30 (Wed) 13:00Z-14:00Z = 1h 00m
+      first approval: andres-co (America/Bogota) at day 30 (Wed) 15:00Z
+        on the wall: day 30 (Wed) 13:00Z-15:00Z = 2h 00m
+        working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 30 (Wed) 14:00Z-15:00Z = 1h 00m
+      merge: at day 30 (Wed) 16:00Z
+        on the wall: day 30 (Wed) 13:00Z-16:00Z = 3h 00m
+        working hours of the author lucia-co (America/Bogota, UTC-05:00 at the start): day 30 (Wed) 13:00Z-16:00Z = 3h 00m
+  #138*  maya-ny    ready day 31 (Thu) 13:00Z  review lucia-co 28h 30m / 12h 00m      approval 28h 30m / 12h 00m  merge 29h 00m / 12h 00m
+      ready for review and open: day 31 (Thu) 13:00Z-day 32 (Fri) 18:00Z
+      first review: lucia-co (America/Bogota), APPROVED, at day 32 (Fri) 17:30Z
+        on the wall: day 31 (Thu) 13:00Z-day 32 (Fri) 17:30Z = 28h 30m
+        working hours of lucia-co (America/Bogota, UTC-05:00 at the start): day 31 (Thu) 13:00Z-17:00Z, day 31 (Thu) 18:00Z-22:00Z, day 32 (Fri) 13:00Z-17:00Z = 12h 00m
+      first approval: lucia-co (America/Bogota) at day 32 (Fri) 17:30Z
+        on the wall: day 31 (Thu) 13:00Z-day 32 (Fri) 17:30Z = 28h 30m
+        working hours of lucia-co (America/Bogota, UTC-05:00 at the start): day 31 (Thu) 13:00Z-17:00Z, day 31 (Thu) 18:00Z-22:00Z, day 32 (Fri) 13:00Z-17:00Z = 12h 00m
+      merge: at day 32 (Fri) 18:00Z
+        on the wall: day 31 (Thu) 13:00Z-day 32 (Fri) 18:00Z = 29h 00m
+        working hours of the author maya-ny (America/New_York, UTC-04:00 at the start): day 31 (Thu) 13:00Z-16:30Z, day 31 (Thu) 17:30Z-21:30Z, day 32 (Fri) 12:30Z-16:30Z, day 32 (Fri) 17:30Z-18:00Z = 12h 00m
+  #139   anke-dev   ready day 32 (Fri) 07:30Z  review andres-co 7h 10m / 0h 40m       approval 7h 10m / 0h 40m    merge 8h 30m / 8h 00m
+      ready for review and open: day 32 (Fri) 07:30Z-16:00Z
+      first review: andres-co (America/Bogota), APPROVED, at day 32 (Fri) 14:40Z
+        on the wall: day 32 (Fri) 07:30Z-14:40Z = 7h 10m
+        working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 32 (Fri) 14:00Z-14:40Z = 0h 40m
+      first approval: andres-co (America/Bogota) at day 32 (Fri) 14:40Z
+        on the wall: day 32 (Fri) 07:30Z-14:40Z = 7h 10m
+        working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 32 (Fri) 14:00Z-14:40Z = 0h 40m
+      merge: at day 32 (Fri) 16:00Z
+        on the wall: day 32 (Fri) 07:30Z-16:00Z = 8h 30m
+        working hours of the author anke-dev (Europe/Berlin, UTC+02:00 at the start): day 32 (Fri) 07:30Z-15:30Z = 8h 00m
+  #140   jonas-k    ready day 32 (Fri) 08:10Z  review maya-ny 6h 40m / 2h 20m         approval -                  merge -
+      ready for review and open: from day 32 (Fri) 08:10Z, still open
+      first review: maya-ny (America/New_York), COMMENTED, at day 32 (Fri) 14:50Z
+        on the wall: day 32 (Fri) 08:10Z-14:50Z = 6h 40m
+        working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 32 (Fri) 12:30Z-14:50Z = 2h 20m
+
+Basis
+
+  "A draft pull request was marked as ready for review." (ready_for_review, https://docs.github.com/en/rest/using-the-rest-api/issue-event-types)
+  "Lists all reviews for a specified pull request. The list of reviews returns in chronological order." (List reviews for a pull request, https://docs.github.com/en/rest/pulls/reviews)
+  "Dismisses a specified review on a pull request." (Dismiss a review for a pull request, https://docs.github.com/en/rest/pulls/reviews)
+  "The pull request was merged." (merged, https://docs.github.com/en/rest/using-the-rest-api/issue-event-types)
+  "Timestamps returned by the API are in UTC time, ISO 8601 format." (Timezones and the REST API, https://docs.github.com/en/rest/using-the-rest-api/timezones-and-the-rest-api)
+  "Because the daylight saving rules for local time zones are so convoluted and can change based on local law at unpredictable times, true interoperability is best achieved by using Coordinated Universal Time (UTC)." (4.1. Coordinated Universal Time (UTC), https://www.rfc-editor.org/rfc/rfc3339.txt)
+  "It is updated periodically to reflect changes made by political bodies to time zone boundaries, UTC offsets, and daylight-saving rules." (Time Zones, https://www.iana.org/time-zones)
+
+note: left out: 2 pull requests opened by a bot: #109 and #130
+note: left out: 1 pull request opened by a login that is not in the team file: #117
+note: left out: 1 pull request never ready for review (still a draft): #128
+note: not a first review: 1 review by the author of the pull request
+note: not a first review: 1 review by a bot
+note: not a first review: 1 review never submitted (PENDING)
+note: not a first review: 1 review submitted before the pull request was first ready for review
+note: not a first review: 1 review by a login that is not in the team file
+note: 1 pull request has no list of issue events (#133): each is taken as ready from created_at, so one that began as a draft is counted from the moment it was opened
+
+RESULT: FAIL - 6 of 36 pull requests waited longer than 4h 00m of working hours for a first review

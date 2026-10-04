@@ -1,0 +1,27 @@
+Source: https://docs.github.com/en/rest/issues/events
+
+REST API endpoints for issue events
+
+Use the REST API to retrieve events triggered by activity in issues and pull requests.
+
+About events
+
+You can use the REST API to view different types of events triggered by activity in issues and pull requests. For more information about the specific events that you can receive, see Issue event types.
+
+Every pull request is an issue, but not every issue is a pull request. For this reason, "shared" actions for both features, like managing assignees, labels, and milestones, are provided within the Issues endpoints.
+
+[...]
+
+List issue events
+
+GET /repos/{owner}/{repo}/issues/{issue_number}/events
+
+Lists all events for an issue.
+
+[...]
+
+per_page (integer)
+  The number of results per page (max 100). For more information, see "Using pagination in the REST API."
+  Default: 30
+
+[...]

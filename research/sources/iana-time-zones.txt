@@ -1,0 +1,7 @@
+Source: https://www.iana.org/time-zones
+
+IANA, Time Zones
+
+The Time Zone Database (often called tz or zoneinfo) contains code and data that represent the history of local time for many representative locations worldwide. It is updated periodically to reflect changes made by political bodies to time zone boundaries, UTC offsets, and daylight-saving rules.
+
+The database is primarily intended for software implementers. Its data is expressed as machine-readable rules that, together with the reference implementation, allow software to automatically calculate local time with the correct UTC offset for any given location. End users typically receive updates to this data through their software and operating system vendors.

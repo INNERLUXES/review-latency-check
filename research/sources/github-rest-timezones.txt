@@ -1,0 +1,24 @@
+Source: https://docs.github.com/en/rest/using-the-rest-api/timezones-and-the-rest-api
+
+Timezones and the REST API
+
+Some REST API endpoints allow you to specify timezone information with your request.
+
+Some requests that create new data, such as creating a new commit, allow you to provide timezone information when specifying or generating timestamps.
+
+Note that these rules apply only to data passed to the API, not to data returned by the API. Timestamps returned by the API are in UTC time, ISO 8601 format.
+
+Determining the timezone for a request
+
+To determine timezone information for applicable API calls, we apply these rules in order of priority:
+
+1. Explicitly providing an ISO 8601 timestamp with timezone information
+2. Using the Time-Zone header
+3. Using the last known timezone for the user
+4. Defaulting to UTC without other timezone information
+
+[...]
+
+Defaulting to UTC without other timezone information
+
+If the steps above don't result in any information, we use UTC as the timezone.

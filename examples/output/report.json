@@ -1,0 +1,1981 @@
+{
+  "tool": "review-latency-check",
+  "version": "1.0.0",
+  "files": {
+    "pulls": "pulls.json",
+    "team": "team.json",
+    "config": "config.json"
+  },
+  "labels": "offset",
+  "team": {
+    "name": "Example platform team",
+    "people": [
+      {
+        "login": "anke-dev",
+        "zone": "Europe/Berlin",
+        "hours": "mon-fri 09:00-17:30"
+      },
+      {
+        "login": "jonas-k",
+        "zone": "Europe/Berlin",
+        "hours": "mon-fri 08:00-16:30"
+      },
+      {
+        "login": "ben-ny",
+        "zone": "America/New_York",
+        "hours": "mon-fri 09:00-17:00"
+      },
+      {
+        "login": "maya-ny",
+        "zone": "America/New_York",
+        "hours": "mon-fri 08:30-12:30, 13:30-17:30"
+      },
+      {
+        "login": "lucia-co",
+        "zone": "America/Bogota",
+        "hours": "mon-fri 08:00-12:00, 13:00-17:00"
+      },
+      {
+        "login": "andres-co",
+        "zone": "America/Bogota",
+        "hours": "mon-fri 09:00-18:00"
+      }
+    ]
+  },
+  "limit": {
+    "measure": "working",
+    "minutes": 240,
+    "text": "a first review within 4h 00m (240 minutes) of the working hours of the reviewer"
+  },
+  "percentile": 90,
+  "bots": [
+    "*[bot]",
+    "release-helper"
+  ],
+  "unknownLogins": "exclude",
+  "asOf": "day 32 (Fri) 18:00Z",
+  "span": {
+    "first": "day 0 (Mon) 08:30Z",
+    "last": "day 32 (Fri) 18:00Z"
+  },
+  "clockChanges": [
+    {
+      "zone": "America/New_York",
+      "label": "day 6 (Sun)",
+      "before": "UTC-05:00",
+      "after": "UTC-04:00"
+    },
+    {
+      "zone": "Europe/Berlin",
+      "label": "day 27 (Sun)",
+      "before": "UTC+01:00",
+      "after": "UTC+02:00"
+    }
+  ],
+  "counts": {
+    "read": 40,
+    "measured": 36,
+    "reviewed": 34,
+    "approved": 33,
+    "merged": 33,
+    "closedUnreviewed": 1,
+    "openUnreviewed": 1,
+    "late": 6,
+    "excluded": {
+      "bot": 2,
+      "no-author": 0,
+      "outside-team": 1,
+      "never-ready": 1
+    },
+    "skippedReviews": {
+      "author": 1,
+      "bot": 1,
+      "pending": 1,
+      "no-user": 0,
+      "before-ready": 1,
+      "outside-team": 1
+    }
+  },
+  "overall": [
+    {
+      "metric": "first-review",
+      "hoursOf": "the reviewer",
+      "count": 34,
+      "wall": {
+        "count": 34,
+        "median": 295,
+        "upper": 1710,
+        "max": 4200
+      },
+      "working": {
+        "count": 34,
+        "median": 60,
+        "upper": 270,
+        "max": 720
+      }
+    },
+    {
+      "metric": "first-approval",
+      "hoursOf": "the approver",
+      "count": 33,
+      "wall": {
+        "count": 33,
+        "median": 450,
+        "upper": 3430,
+        "max": 4260
+      },
+      "working": {
+        "count": 33,
+        "median": 90,
+        "upper": 300,
+        "max": 720
+      }
+    },
+    {
+      "metric": "merge",
+      "hoursOf": "the author",
+      "count": 33,
+      "wall": {
+        "count": 33,
+        "median": 540,
+        "upper": 3480,
+        "max": 4320
+      },
+      "working": {
+        "count": 33,
+        "median": 300,
+        "upper": 480,
+        "max": 780
+      }
+    }
+  ],
+  "pairs": [
+    {
+      "authorZone": "America/Bogota",
+      "reviewerZone": "America/Bogota",
+      "count": 1,
+      "wall": {
+        "count": 1,
+        "median": 100,
+        "upper": 100,
+        "max": 100
+      },
+      "working": {
+        "count": 1,
+        "median": 70,
+        "upper": 70,
+        "max": 70
+      }
+    },
+    {
+      "authorZone": "America/Bogota",
+      "reviewerZone": "America/New_York",
+      "count": 4,
+      "wall": {
+        "count": 4,
+        "median": 30,
+        "upper": 960,
+        "max": 960
+      },
+      "working": {
+        "count": 4,
+        "median": 30,
+        "upper": 100,
+        "max": 100
+      }
+    },
+    {
+      "authorZone": "America/Bogota",
+      "reviewerZone": "Europe/Berlin",
+      "count": 5,
+      "wall": {
+        "count": 5,
+        "median": 970,
+        "upper": 3560,
+        "max": 3560
+      },
+      "working": {
+        "count": 5,
+        "median": 20,
+        "upper": 60,
+        "max": 60
+      }
+    },
+    {
+      "authorZone": "America/New_York",
+      "reviewerZone": "America/Bogota",
+      "count": 5,
+      "wall": {
+        "count": 5,
+        "median": 120,
+        "upper": 1710,
+        "max": 1710
+      },
+      "working": {
+        "count": 5,
+        "median": 90,
+        "upper": 720,
+        "max": 720
+      }
+    },
+    {
+      "authorZone": "America/New_York",
+      "reviewerZone": "America/New_York",
+      "count": 1,
+      "wall": {
+        "count": 1,
+        "median": 90,
+        "upper": 90,
+        "max": 90
+      },
+      "working": {
+        "count": 1,
+        "median": 90,
+        "upper": 90,
+        "max": 90
+      }
+    },
+    {
+      "authorZone": "America/New_York",
+      "reviewerZone": "Europe/Berlin",
+      "count": 5,
+      "wall": {
+        "count": 5,
+        "median": 975,
+        "upper": 1100,
+        "max": 1100
+      },
+      "working": {
+        "count": 5,
+        "median": 60,
+        "upper": 170,
+        "max": 170
+      }
+    },
+    {
+      "authorZone": "Europe/Berlin",
+      "reviewerZone": "America/Bogota",
+      "count": 3,
+      "wall": {
+        "count": 3,
+        "median": 210,
+        "upper": 430,
+        "max": 430
+      },
+      "working": {
+        "count": 3,
+        "median": 40,
+        "upper": 60,
+        "max": 60
+      }
+    },
+    {
+      "authorZone": "Europe/Berlin",
+      "reviewerZone": "America/New_York",
+      "count": 8,
+      "wall": {
+        "count": 8,
+        "median": 350,
+        "upper": 4200,
+        "max": 4200
+      },
+      "working": {
+        "count": 8,
+        "median": 20,
+        "upper": 420,
+        "max": 420
+      }
+    },
+    {
+      "authorZone": "Europe/Berlin",
+      "reviewerZone": "Europe/Berlin",
+      "count": 2,
+      "wall": {
+        "count": 2,
+        "median": 90,
+        "upper": 270,
+        "max": 270
+      },
+      "working": {
+        "count": 2,
+        "median": 60,
+        "upper": 270,
+        "max": 270
+      }
+    }
+  ],
+  "late": [
+    {
+      "number": 111,
+      "author": "jonas-k",
+      "authorZone": "Europe/Berlin",
+      "kind": "review",
+      "by": "ben-ny",
+      "reviewerZone": "America/New_York",
+      "ready": "day 4 (Fri) 14:00Z",
+      "end": "day 4 (Fri) 21:00Z",
+      "wallMinutes": 420,
+      "workingMinutes": 420
+    },
+    {
+      "number": 116,
+      "author": "jonas-k",
+      "authorZone": "Europe/Berlin",
+      "kind": "review",
+      "by": "anke-dev",
+      "reviewerZone": "Europe/Berlin",
+      "ready": "day 8 (Tue) 08:00Z",
+      "end": "day 8 (Tue) 12:30Z",
+      "wallMinutes": 270,
+      "workingMinutes": 270
+    },
+    {
+      "number": 119,
+      "author": "maya-ny",
+      "authorZone": "America/New_York",
+      "kind": "closed-unreviewed",
+      "by": null,
+      "reviewerZone": null,
+      "ready": "day 9 (Wed) 20:00Z",
+      "end": "day 11 (Fri) 19:00Z",
+      "wallMinutes": 2820,
+      "workingMinutes": 1860
+    },
+    {
+      "number": 123,
+      "author": "jonas-k",
+      "authorZone": "Europe/Berlin",
+      "kind": "review",
+      "by": "maya-ny",
+      "reviewerZone": "America/New_York",
+      "ready": "day 11 (Fri) 15:00Z",
+      "end": "day 14 (Mon) 13:00Z",
+      "wallMinutes": 4200,
+      "workingMinutes": 360
+    },
+    {
+      "number": 127,
+      "author": "andres-co",
+      "authorZone": "America/Bogota",
+      "kind": "open-unreviewed",
+      "by": null,
+      "reviewerZone": null,
+      "ready": "day 16 (Wed) 14:00Z",
+      "end": "day 32 (Fri) 18:00Z",
+      "wallMinutes": 23280,
+      "workingMinutes": 11340
+    },
+    {
+      "number": 138,
+      "author": "maya-ny",
+      "authorZone": "America/New_York",
+      "kind": "review",
+      "by": "lucia-co",
+      "reviewerZone": "America/Bogota",
+      "ready": "day 31 (Thu) 13:00Z",
+      "end": "day 32 (Fri) 17:30Z",
+      "wallMinutes": 1710,
+      "workingMinutes": 720
+    }
+  ],
+  "pulls": [
+    {
+      "number": 101,
+      "author": "anke-dev",
+      "authorZone": "Europe/Berlin",
+      "state": "merged",
+      "ready": "day 0 (Mon) 08:30Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "ben-ny",
+        "zone": "America/New_York",
+        "state": "COMMENTED",
+        "wallMinutes": 350,
+        "workingMinutes": 20,
+        "at": "day 0 (Mon) 14:20Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "ben-ny",
+        "zone": "America/New_York",
+        "state": "APPROVED",
+        "wallMinutes": 450,
+        "workingMinutes": 120,
+        "at": "day 0 (Mon) 16:00Z"
+      },
+      "merge": {
+        "wallMinutes": 480,
+        "workingMinutes": 480,
+        "at": "day 0 (Mon) 16:30Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 0 (Mon) 08:30Z-16:30Z",
+        "first review: ben-ny (America/New_York), COMMENTED, at day 0 (Mon) 14:20Z",
+        "  on the wall: day 0 (Mon) 08:30Z-14:20Z = 5h 50m",
+        "  working hours of ben-ny (America/New_York, UTC-05:00 at the start): day 0 (Mon) 14:00Z-14:20Z = 0h 20m",
+        "first approval: ben-ny (America/New_York) at day 0 (Mon) 16:00Z",
+        "  on the wall: day 0 (Mon) 08:30Z-16:00Z = 7h 30m",
+        "  working hours of ben-ny (America/New_York, UTC-05:00 at the start): day 0 (Mon) 14:00Z-16:00Z = 2h 00m",
+        "merge: at day 0 (Mon) 16:30Z",
+        "  on the wall: day 0 (Mon) 08:30Z-16:30Z = 8h 00m",
+        "  working hours of the author anke-dev (Europe/Berlin, UTC+01:00 at the start): day 0 (Mon) 08:30Z-16:30Z = 8h 00m"
+      ]
+    },
+    {
+      "number": 102,
+      "author": "ben-ny",
+      "authorZone": "America/New_York",
+      "state": "merged",
+      "ready": "day 0 (Mon) 15:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "anke-dev",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 1060,
+        "workingMinutes": 130,
+        "at": "day 1 (Tue) 08:40Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "anke-dev",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 1060,
+        "workingMinutes": 130,
+        "at": "day 1 (Tue) 08:40Z"
+      },
+      "merge": {
+        "wallMinutes": 1080,
+        "workingMinutes": 420,
+        "at": "day 1 (Tue) 09:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 0 (Mon) 15:00Z-day 1 (Tue) 09:00Z",
+        "first review: anke-dev (Europe/Berlin), APPROVED, at day 1 (Tue) 08:40Z",
+        "  on the wall: day 0 (Mon) 15:00Z-day 1 (Tue) 08:40Z = 17h 40m",
+        "  working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 0 (Mon) 15:00Z-16:30Z, day 1 (Tue) 08:00Z-08:40Z = 2h 10m",
+        "first approval: anke-dev (Europe/Berlin) at day 1 (Tue) 08:40Z",
+        "  on the wall: day 0 (Mon) 15:00Z-day 1 (Tue) 08:40Z = 17h 40m",
+        "  working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 0 (Mon) 15:00Z-16:30Z, day 1 (Tue) 08:00Z-08:40Z = 2h 10m",
+        "merge: at day 1 (Tue) 09:00Z",
+        "  on the wall: day 0 (Mon) 15:00Z-day 1 (Tue) 09:00Z = 18h 00m",
+        "  working hours of the author ben-ny (America/New_York, UTC-05:00 at the start): day 0 (Mon) 15:00Z-22:00Z = 7h 00m"
+      ]
+    },
+    {
+      "number": 103,
+      "author": "lucia-co",
+      "authorZone": "America/Bogota",
+      "state": "merged",
+      "ready": "day 0 (Mon) 13:30Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "andres-co",
+        "zone": "America/Bogota",
+        "state": "APPROVED",
+        "wallMinutes": 100,
+        "workingMinutes": 70,
+        "at": "day 0 (Mon) 15:10Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "andres-co",
+        "zone": "America/Bogota",
+        "state": "APPROVED",
+        "wallMinutes": 100,
+        "workingMinutes": 70,
+        "at": "day 0 (Mon) 15:10Z"
+      },
+      "merge": {
+        "wallMinutes": 150,
+        "workingMinutes": 150,
+        "at": "day 0 (Mon) 16:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 0 (Mon) 13:30Z-16:00Z",
+        "first review: andres-co (America/Bogota), APPROVED, at day 0 (Mon) 15:10Z",
+        "  on the wall: day 0 (Mon) 13:30Z-15:10Z = 1h 40m",
+        "  working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 0 (Mon) 14:00Z-15:10Z = 1h 10m",
+        "first approval: andres-co (America/Bogota) at day 0 (Mon) 15:10Z",
+        "  on the wall: day 0 (Mon) 13:30Z-15:10Z = 1h 40m",
+        "  working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 0 (Mon) 14:00Z-15:10Z = 1h 10m",
+        "merge: at day 0 (Mon) 16:00Z",
+        "  on the wall: day 0 (Mon) 13:30Z-16:00Z = 2h 30m",
+        "  working hours of the author lucia-co (America/Bogota, UTC-05:00 at the start): day 0 (Mon) 13:30Z-16:00Z = 2h 30m"
+      ]
+    },
+    {
+      "number": 104,
+      "author": "jonas-k",
+      "authorZone": "Europe/Berlin",
+      "state": "merged",
+      "ready": "day 1 (Tue) 07:30Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "anke-dev",
+        "zone": "Europe/Berlin",
+        "state": "CHANGES_REQUESTED",
+        "wallMinutes": 90,
+        "workingMinutes": 60,
+        "at": "day 1 (Tue) 09:00Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "anke-dev",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 330,
+        "workingMinutes": 300,
+        "at": "day 1 (Tue) 13:00Z"
+      },
+      "merge": {
+        "wallMinutes": 360,
+        "workingMinutes": 360,
+        "at": "day 1 (Tue) 13:30Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 1 (Tue) 07:30Z-13:30Z",
+        "first review: anke-dev (Europe/Berlin), CHANGES_REQUESTED, at day 1 (Tue) 09:00Z",
+        "  on the wall: day 1 (Tue) 07:30Z-09:00Z = 1h 30m",
+        "  working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 1 (Tue) 08:00Z-09:00Z = 1h 00m",
+        "first approval: anke-dev (Europe/Berlin) at day 1 (Tue) 13:00Z",
+        "  on the wall: day 1 (Tue) 07:30Z-13:00Z = 5h 30m",
+        "  working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 1 (Tue) 08:00Z-13:00Z = 5h 00m",
+        "merge: at day 1 (Tue) 13:30Z",
+        "  on the wall: day 1 (Tue) 07:30Z-13:30Z = 6h 00m",
+        "  working hours of the author jonas-k (Europe/Berlin, UTC+01:00 at the start): day 1 (Tue) 07:30Z-13:30Z = 6h 00m"
+      ]
+    },
+    {
+      "number": 105,
+      "author": "maya-ny",
+      "authorZone": "America/New_York",
+      "state": "merged",
+      "ready": "day 1 (Tue) 21:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "jonas-k",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 645,
+        "workingMinutes": 45,
+        "at": "day 2 (Wed) 07:45Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "jonas-k",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 645,
+        "workingMinutes": 45,
+        "at": "day 2 (Wed) 07:45Z"
+      },
+      "merge": {
+        "wallMinutes": 1020,
+        "workingMinutes": 120,
+        "at": "day 2 (Wed) 14:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 1 (Tue) 21:00Z-day 2 (Wed) 14:00Z",
+        "first review: jonas-k (Europe/Berlin), APPROVED, at day 2 (Wed) 07:45Z",
+        "  on the wall: day 1 (Tue) 21:00Z-day 2 (Wed) 07:45Z = 10h 45m",
+        "  working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 2 (Wed) 07:00Z-07:45Z = 0h 45m",
+        "first approval: jonas-k (Europe/Berlin) at day 2 (Wed) 07:45Z",
+        "  on the wall: day 1 (Tue) 21:00Z-day 2 (Wed) 07:45Z = 10h 45m",
+        "  working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 2 (Wed) 07:00Z-07:45Z = 0h 45m",
+        "merge: at day 2 (Wed) 14:00Z",
+        "  on the wall: day 1 (Tue) 21:00Z-day 2 (Wed) 14:00Z = 17h 00m",
+        "  working hours of the author maya-ny (America/New_York, UTC-05:00 at the start): day 1 (Tue) 21:00Z-22:30Z, day 2 (Wed) 13:30Z-14:00Z = 2h 00m"
+      ]
+    },
+    {
+      "number": 106,
+      "author": "andres-co",
+      "authorZone": "America/Bogota",
+      "state": "merged",
+      "ready": "day 1 (Tue) 22:30Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "ben-ny",
+        "zone": "America/New_York",
+        "state": "APPROVED",
+        "wallMinutes": 960,
+        "workingMinutes": 30,
+        "at": "day 2 (Wed) 14:30Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "ben-ny",
+        "zone": "America/New_York",
+        "state": "APPROVED",
+        "wallMinutes": 960,
+        "workingMinutes": 30,
+        "at": "day 2 (Wed) 14:30Z"
+      },
+      "merge": {
+        "wallMinutes": 990,
+        "workingMinutes": 90,
+        "at": "day 2 (Wed) 15:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 1 (Tue) 22:30Z-day 2 (Wed) 15:00Z",
+        "first review: ben-ny (America/New_York), APPROVED, at day 2 (Wed) 14:30Z",
+        "  on the wall: day 1 (Tue) 22:30Z-day 2 (Wed) 14:30Z = 16h 00m",
+        "  working hours of ben-ny (America/New_York, UTC-05:00 at the start): day 2 (Wed) 14:00Z-14:30Z = 0h 30m",
+        "first approval: ben-ny (America/New_York) at day 2 (Wed) 14:30Z",
+        "  on the wall: day 1 (Tue) 22:30Z-day 2 (Wed) 14:30Z = 16h 00m",
+        "  working hours of ben-ny (America/New_York, UTC-05:00 at the start): day 2 (Wed) 14:00Z-14:30Z = 0h 30m",
+        "merge: at day 2 (Wed) 15:00Z",
+        "  on the wall: day 1 (Tue) 22:30Z-day 2 (Wed) 15:00Z = 16h 30m",
+        "  working hours of the author andres-co (America/Bogota, UTC-05:00 at the start): day 1 (Tue) 22:30Z-23:00Z, day 2 (Wed) 14:00Z-15:00Z = 1h 30m"
+      ]
+    },
+    {
+      "number": 107,
+      "author": "anke-dev",
+      "authorZone": "Europe/Berlin",
+      "state": "merged",
+      "ready": "day 2 (Wed) 13:00Z",
+      "startedAsDraft": true,
+      "firstReview": {
+        "by": "maya-ny",
+        "zone": "America/New_York",
+        "state": "APPROVED",
+        "wallMinutes": 120,
+        "workingMinutes": 90,
+        "at": "day 2 (Wed) 15:00Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "maya-ny",
+        "zone": "America/New_York",
+        "state": "APPROVED",
+        "wallMinutes": 120,
+        "workingMinutes": 90,
+        "at": "day 2 (Wed) 15:00Z"
+      },
+      "merge": {
+        "wallMinutes": 150,
+        "workingMinutes": 150,
+        "at": "day 2 (Wed) 15:30Z"
+      },
+      "skippedReviews": {
+        "before-ready": 1
+      },
+      "late": false,
+      "explain": [
+        "ready for review and open: day 2 (Wed) 13:00Z-15:30Z",
+        "first review: maya-ny (America/New_York), APPROVED, at day 2 (Wed) 15:00Z",
+        "  on the wall: day 2 (Wed) 13:00Z-15:00Z = 2h 00m",
+        "  working hours of maya-ny (America/New_York, UTC-05:00 at the start): day 2 (Wed) 13:30Z-15:00Z = 1h 30m",
+        "first approval: maya-ny (America/New_York) at day 2 (Wed) 15:00Z",
+        "  on the wall: day 2 (Wed) 13:00Z-15:00Z = 2h 00m",
+        "  working hours of maya-ny (America/New_York, UTC-05:00 at the start): day 2 (Wed) 13:30Z-15:00Z = 1h 30m",
+        "merge: at day 2 (Wed) 15:30Z",
+        "  on the wall: day 2 (Wed) 13:00Z-15:30Z = 2h 30m",
+        "  working hours of the author anke-dev (Europe/Berlin, UTC+01:00 at the start): day 2 (Wed) 13:00Z-15:30Z = 2h 30m"
+      ]
+    },
+    {
+      "number": 108,
+      "author": "ben-ny",
+      "authorZone": "America/New_York",
+      "state": "merged",
+      "ready": "day 3 (Thu) 14:30Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "lucia-co",
+        "zone": "America/Bogota",
+        "state": "COMMENTED",
+        "wallMinutes": 90,
+        "workingMinutes": 90,
+        "at": "day 3 (Thu) 16:00Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "andres-co",
+        "zone": "America/Bogota",
+        "state": "APPROVED",
+        "wallMinutes": 150,
+        "workingMinutes": 150,
+        "at": "day 3 (Thu) 17:00Z"
+      },
+      "merge": {
+        "wallMinutes": 210,
+        "workingMinutes": 210,
+        "at": "day 3 (Thu) 18:00Z"
+      },
+      "skippedReviews": {
+        "author": 1
+      },
+      "late": false,
+      "explain": [
+        "ready for review and open: day 3 (Thu) 14:30Z-18:00Z",
+        "first review: lucia-co (America/Bogota), COMMENTED, at day 3 (Thu) 16:00Z",
+        "  on the wall: day 3 (Thu) 14:30Z-16:00Z = 1h 30m",
+        "  working hours of lucia-co (America/Bogota, UTC-05:00 at the start): day 3 (Thu) 14:30Z-16:00Z = 1h 30m",
+        "first approval: andres-co (America/Bogota) at day 3 (Thu) 17:00Z",
+        "  on the wall: day 3 (Thu) 14:30Z-17:00Z = 2h 30m",
+        "  working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 3 (Thu) 14:30Z-17:00Z = 2h 30m",
+        "merge: at day 3 (Thu) 18:00Z",
+        "  on the wall: day 3 (Thu) 14:30Z-18:00Z = 3h 30m",
+        "  working hours of the author ben-ny (America/New_York, UTC-05:00 at the start): day 3 (Thu) 14:30Z-18:00Z = 3h 30m"
+      ]
+    },
+    {
+      "number": 110,
+      "author": "lucia-co",
+      "authorZone": "America/Bogota",
+      "state": "merged",
+      "ready": "day 4 (Fri) 20:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "jonas-k",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 3560,
+        "workingMinutes": 20,
+        "at": "day 7 (Mon) 07:20Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "jonas-k",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 3560,
+        "workingMinutes": 20,
+        "at": "day 7 (Mon) 07:20Z"
+      },
+      "merge": {
+        "wallMinutes": 3600,
+        "workingMinutes": 120,
+        "at": "day 7 (Mon) 08:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 4 (Fri) 20:00Z-day 7 (Mon) 08:00Z",
+        "first review: jonas-k (Europe/Berlin), APPROVED, at day 7 (Mon) 07:20Z",
+        "  on the wall: day 4 (Fri) 20:00Z-day 7 (Mon) 07:20Z = 59h 20m",
+        "  working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 7 (Mon) 07:00Z-07:20Z = 0h 20m",
+        "first approval: jonas-k (Europe/Berlin) at day 7 (Mon) 07:20Z",
+        "  on the wall: day 4 (Fri) 20:00Z-day 7 (Mon) 07:20Z = 59h 20m",
+        "  working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 7 (Mon) 07:00Z-07:20Z = 0h 20m",
+        "merge: at day 7 (Mon) 08:00Z",
+        "  on the wall: day 4 (Fri) 20:00Z-day 7 (Mon) 08:00Z = 60h 00m",
+        "  working hours of the author lucia-co (America/Bogota, UTC-05:00 at the start): day 4 (Fri) 20:00Z-22:00Z = 2h 00m"
+      ]
+    },
+    {
+      "number": 111,
+      "author": "jonas-k",
+      "authorZone": "Europe/Berlin",
+      "state": "merged",
+      "ready": "day 4 (Fri) 14:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "ben-ny",
+        "zone": "America/New_York",
+        "state": "COMMENTED",
+        "wallMinutes": 420,
+        "workingMinutes": 420,
+        "at": "day 4 (Fri) 21:00Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "anke-dev",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 3990,
+        "workingMinutes": 180,
+        "at": "day 7 (Mon) 08:30Z"
+      },
+      "merge": {
+        "wallMinutes": 4020,
+        "workingMinutes": 210,
+        "at": "day 7 (Mon) 09:00Z"
+      },
+      "skippedReviews": {},
+      "late": true,
+      "explain": [
+        "ready for review and open: day 4 (Fri) 14:00Z-day 7 (Mon) 09:00Z",
+        "first review: ben-ny (America/New_York), COMMENTED, at day 4 (Fri) 21:00Z",
+        "  on the wall: day 4 (Fri) 14:00Z-21:00Z = 7h 00m",
+        "  working hours of ben-ny (America/New_York, UTC-05:00 at the start): day 4 (Fri) 14:00Z-21:00Z = 7h 00m",
+        "first approval: anke-dev (Europe/Berlin) at day 7 (Mon) 08:30Z",
+        "  on the wall: day 4 (Fri) 14:00Z-day 7 (Mon) 08:30Z = 66h 30m",
+        "  working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 4 (Fri) 14:00Z-16:30Z, day 7 (Mon) 08:00Z-08:30Z = 3h 00m",
+        "merge: at day 7 (Mon) 09:00Z",
+        "  on the wall: day 4 (Fri) 14:00Z-day 7 (Mon) 09:00Z = 67h 00m",
+        "  working hours of the author jonas-k (Europe/Berlin, UTC+01:00 at the start): day 4 (Fri) 14:00Z-15:30Z, day 7 (Mon) 07:00Z-09:00Z = 3h 30m"
+      ]
+    },
+    {
+      "number": 112,
+      "author": "maya-ny",
+      "authorZone": "America/New_York",
+      "state": "merged",
+      "ready": "day 7 (Mon) 13:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "andres-co",
+        "zone": "America/Bogota",
+        "state": "APPROVED",
+        "wallMinutes": 120,
+        "workingMinutes": 60,
+        "at": "day 7 (Mon) 15:00Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "andres-co",
+        "zone": "America/Bogota",
+        "state": "APPROVED",
+        "wallMinutes": 120,
+        "workingMinutes": 60,
+        "at": "day 7 (Mon) 15:00Z"
+      },
+      "merge": {
+        "wallMinutes": 180,
+        "workingMinutes": 180,
+        "at": "day 7 (Mon) 16:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 7 (Mon) 13:00Z-16:00Z",
+        "first review: andres-co (America/Bogota), APPROVED, at day 7 (Mon) 15:00Z",
+        "  on the wall: day 7 (Mon) 13:00Z-15:00Z = 2h 00m",
+        "  working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 7 (Mon) 14:00Z-15:00Z = 1h 00m",
+        "first approval: andres-co (America/Bogota) at day 7 (Mon) 15:00Z",
+        "  on the wall: day 7 (Mon) 13:00Z-15:00Z = 2h 00m",
+        "  working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 7 (Mon) 14:00Z-15:00Z = 1h 00m",
+        "merge: at day 7 (Mon) 16:00Z",
+        "  on the wall: day 7 (Mon) 13:00Z-16:00Z = 3h 00m",
+        "  working hours of the author maya-ny (America/New_York, UTC-04:00 at the start): day 7 (Mon) 13:00Z-16:00Z = 3h 00m"
+      ]
+    },
+    {
+      "number": 113,
+      "author": "anke-dev",
+      "authorZone": "Europe/Berlin",
+      "state": "merged",
+      "ready": "day 7 (Mon) 10:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "lucia-co",
+        "zone": "America/Bogota",
+        "state": "CHANGES_REQUESTED",
+        "wallMinutes": 210,
+        "workingMinutes": 30,
+        "at": "day 7 (Mon) 13:30Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "lucia-co",
+        "zone": "America/Bogota",
+        "state": "APPROVED",
+        "wallMinutes": 1680,
+        "workingMinutes": 540,
+        "at": "day 8 (Tue) 14:00Z"
+      },
+      "merge": {
+        "wallMinutes": 1710,
+        "workingMinutes": 780,
+        "at": "day 8 (Tue) 14:30Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 7 (Mon) 10:00Z-day 8 (Tue) 14:30Z",
+        "first review: lucia-co (America/Bogota), CHANGES_REQUESTED, at day 7 (Mon) 13:30Z",
+        "  on the wall: day 7 (Mon) 10:00Z-13:30Z = 3h 30m",
+        "  working hours of lucia-co (America/Bogota, UTC-05:00 at the start): day 7 (Mon) 13:00Z-13:30Z = 0h 30m",
+        "first approval: lucia-co (America/Bogota) at day 8 (Tue) 14:00Z",
+        "  on the wall: day 7 (Mon) 10:00Z-day 8 (Tue) 14:00Z = 28h 00m",
+        "  working hours of lucia-co (America/Bogota, UTC-05:00 at the start): day 7 (Mon) 13:00Z-17:00Z, day 7 (Mon) 18:00Z-22:00Z, day 8 (Tue) 13:00Z-14:00Z = 9h 00m",
+        "merge: at day 8 (Tue) 14:30Z",
+        "  on the wall: day 7 (Mon) 10:00Z-day 8 (Tue) 14:30Z = 28h 30m",
+        "  working hours of the author anke-dev (Europe/Berlin, UTC+01:00 at the start): day 7 (Mon) 10:00Z-16:30Z, day 8 (Tue) 08:00Z-14:30Z = 13h 00m"
+      ]
+    },
+    {
+      "number": 114,
+      "author": "andres-co",
+      "authorZone": "America/Bogota",
+      "state": "merged",
+      "ready": "day 7 (Mon) 16:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "anke-dev",
+        "zone": "Europe/Berlin",
+        "state": "COMMENTED",
+        "wallMinutes": 970,
+        "workingMinutes": 40,
+        "at": "day 8 (Tue) 08:10Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "jonas-k",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 1020,
+        "workingMinutes": 120,
+        "at": "day 8 (Tue) 09:00Z"
+      },
+      "merge": {
+        "wallMinutes": 1080,
+        "workingMinutes": 420,
+        "at": "day 8 (Tue) 10:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 7 (Mon) 16:00Z-day 8 (Tue) 10:00Z",
+        "first review: anke-dev (Europe/Berlin), COMMENTED, at day 8 (Tue) 08:10Z",
+        "  on the wall: day 7 (Mon) 16:00Z-day 8 (Tue) 08:10Z = 16h 10m",
+        "  working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 7 (Mon) 16:00Z-16:30Z, day 8 (Tue) 08:00Z-08:10Z = 0h 40m",
+        "first approval: jonas-k (Europe/Berlin) at day 8 (Tue) 09:00Z",
+        "  on the wall: day 7 (Mon) 16:00Z-day 8 (Tue) 09:00Z = 17h 00m",
+        "  working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 8 (Tue) 07:00Z-09:00Z = 2h 00m",
+        "merge: at day 8 (Tue) 10:00Z",
+        "  on the wall: day 7 (Mon) 16:00Z-day 8 (Tue) 10:00Z = 18h 00m",
+        "  working hours of the author andres-co (America/Bogota, UTC-05:00 at the start): day 7 (Mon) 16:00Z-23:00Z = 7h 00m"
+      ]
+    },
+    {
+      "number": 115,
+      "author": "ben-ny",
+      "authorZone": "America/New_York",
+      "state": "merged",
+      "ready": "day 8 (Tue) 13:30Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "maya-ny",
+        "zone": "America/New_York",
+        "state": "APPROVED",
+        "wallMinutes": 90,
+        "workingMinutes": 90,
+        "at": "day 9 (Wed) 14:00Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "maya-ny",
+        "zone": "America/New_York",
+        "state": "APPROVED",
+        "wallMinutes": 90,
+        "workingMinutes": 90,
+        "at": "day 9 (Wed) 14:00Z"
+      },
+      "merge": {
+        "wallMinutes": 150,
+        "workingMinutes": 150,
+        "at": "day 9 (Wed) 15:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 8 (Tue) 13:30Z-14:00Z, day 9 (Wed) 13:00Z-15:00Z",
+        "first review: maya-ny (America/New_York), APPROVED, at day 9 (Wed) 14:00Z",
+        "  on the wall: day 8 (Tue) 13:30Z-14:00Z, day 9 (Wed) 13:00Z-14:00Z = 1h 30m",
+        "  working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 8 (Tue) 13:30Z-14:00Z, day 9 (Wed) 13:00Z-14:00Z = 1h 30m",
+        "first approval: maya-ny (America/New_York) at day 9 (Wed) 14:00Z",
+        "  on the wall: day 8 (Tue) 13:30Z-14:00Z, day 9 (Wed) 13:00Z-14:00Z = 1h 30m",
+        "  working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 8 (Tue) 13:30Z-14:00Z, day 9 (Wed) 13:00Z-14:00Z = 1h 30m",
+        "merge: at day 9 (Wed) 15:00Z",
+        "  on the wall: day 8 (Tue) 13:30Z-14:00Z, day 9 (Wed) 13:00Z-15:00Z = 2h 30m",
+        "  working hours of the author ben-ny (America/New_York, UTC-04:00 at the start): day 8 (Tue) 13:30Z-14:00Z, day 9 (Wed) 13:00Z-15:00Z = 2h 30m"
+      ]
+    },
+    {
+      "number": 116,
+      "author": "jonas-k",
+      "authorZone": "Europe/Berlin",
+      "state": "merged",
+      "ready": "day 8 (Tue) 08:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "anke-dev",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 270,
+        "workingMinutes": 270,
+        "at": "day 8 (Tue) 12:30Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "anke-dev",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 270,
+        "workingMinutes": 270,
+        "at": "day 8 (Tue) 12:30Z"
+      },
+      "merge": {
+        "wallMinutes": 300,
+        "workingMinutes": 300,
+        "at": "day 8 (Tue) 13:00Z"
+      },
+      "skippedReviews": {
+        "outside-team": 1
+      },
+      "late": true,
+      "explain": [
+        "ready for review and open: day 8 (Tue) 08:00Z-13:00Z",
+        "first review: anke-dev (Europe/Berlin), APPROVED, at day 8 (Tue) 12:30Z",
+        "  on the wall: day 8 (Tue) 08:00Z-12:30Z = 4h 30m",
+        "  working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 8 (Tue) 08:00Z-12:30Z = 4h 30m",
+        "first approval: anke-dev (Europe/Berlin) at day 8 (Tue) 12:30Z",
+        "  on the wall: day 8 (Tue) 08:00Z-12:30Z = 4h 30m",
+        "  working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 8 (Tue) 08:00Z-12:30Z = 4h 30m",
+        "merge: at day 8 (Tue) 13:00Z",
+        "  on the wall: day 8 (Tue) 08:00Z-13:00Z = 5h 00m",
+        "  working hours of the author jonas-k (Europe/Berlin, UTC+01:00 at the start): day 8 (Tue) 08:00Z-13:00Z = 5h 00m"
+      ]
+    },
+    {
+      "number": 118,
+      "author": "lucia-co",
+      "authorZone": "America/Bogota",
+      "state": "merged",
+      "ready": "day 9 (Wed) 13:10Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "ben-ny",
+        "zone": "America/New_York",
+        "state": "APPROVED",
+        "wallMinutes": 30,
+        "workingMinutes": 30,
+        "at": "day 9 (Wed) 13:40Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "ben-ny",
+        "zone": "America/New_York",
+        "state": "APPROVED",
+        "wallMinutes": 30,
+        "workingMinutes": 30,
+        "at": "day 9 (Wed) 13:40Z"
+      },
+      "merge": {
+        "wallMinutes": 50,
+        "workingMinutes": 50,
+        "at": "day 9 (Wed) 14:00Z"
+      },
+      "skippedReviews": {
+        "pending": 1
+      },
+      "late": false,
+      "explain": [
+        "ready for review and open: day 9 (Wed) 13:10Z-14:00Z",
+        "first review: ben-ny (America/New_York), APPROVED, at day 9 (Wed) 13:40Z",
+        "  on the wall: day 9 (Wed) 13:10Z-13:40Z = 0h 30m",
+        "  working hours of ben-ny (America/New_York, UTC-04:00 at the start): day 9 (Wed) 13:10Z-13:40Z = 0h 30m",
+        "first approval: ben-ny (America/New_York) at day 9 (Wed) 13:40Z",
+        "  on the wall: day 9 (Wed) 13:10Z-13:40Z = 0h 30m",
+        "  working hours of ben-ny (America/New_York, UTC-04:00 at the start): day 9 (Wed) 13:10Z-13:40Z = 0h 30m",
+        "merge: at day 9 (Wed) 14:00Z",
+        "  on the wall: day 9 (Wed) 13:10Z-14:00Z = 0h 50m",
+        "  working hours of the author lucia-co (America/Bogota, UTC-05:00 at the start): day 9 (Wed) 13:10Z-14:00Z = 0h 50m"
+      ]
+    },
+    {
+      "number": 119,
+      "author": "maya-ny",
+      "authorZone": "America/New_York",
+      "state": "closed",
+      "ready": "day 9 (Wed) 20:00Z",
+      "startedAsDraft": false,
+      "firstReview": null,
+      "unreviewed": {
+        "kind": "closed",
+        "end": "day 11 (Fri) 19:00Z",
+        "wallMinutes": 2820,
+        "workingMinutes": 1860
+      },
+      "firstApproval": null,
+      "merge": null,
+      "skippedReviews": {},
+      "late": true,
+      "explain": [
+        "ready for review and open: day 9 (Wed) 20:00Z-day 11 (Fri) 19:00Z",
+        "first review: none; waited until it was closed at day 11 (Fri) 19:00Z",
+        "  on the wall: day 9 (Wed) 20:00Z-day 11 (Fri) 19:00Z = 47h 00m",
+        "  working hours of at least one other person of the team: day 9 (Wed) 20:00Z-23:00Z, day 10 (Thu) 07:00Z-23:00Z, day 11 (Fri) 07:00Z-19:00Z = 31h 00m"
+      ]
+    },
+    {
+      "number": 120,
+      "author": "anke-dev",
+      "authorZone": "Europe/Berlin",
+      "state": "merged",
+      "ready": "day 10 (Thu) 08:15Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "ben-ny",
+        "zone": "America/New_York",
+        "state": "APPROVED",
+        "wallMinutes": 295,
+        "workingMinutes": 10,
+        "at": "day 10 (Thu) 13:10Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "ben-ny",
+        "zone": "America/New_York",
+        "state": "APPROVED",
+        "wallMinutes": 295,
+        "workingMinutes": 10,
+        "at": "day 10 (Thu) 13:10Z"
+      },
+      "merge": {
+        "wallMinutes": 315,
+        "workingMinutes": 315,
+        "at": "day 10 (Thu) 13:30Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 10 (Thu) 08:15Z-13:30Z",
+        "first review: ben-ny (America/New_York), APPROVED, at day 10 (Thu) 13:10Z",
+        "  on the wall: day 10 (Thu) 08:15Z-13:10Z = 4h 55m",
+        "  working hours of ben-ny (America/New_York, UTC-04:00 at the start): day 10 (Thu) 13:00Z-13:10Z = 0h 10m",
+        "first approval: ben-ny (America/New_York) at day 10 (Thu) 13:10Z",
+        "  on the wall: day 10 (Thu) 08:15Z-13:10Z = 4h 55m",
+        "  working hours of ben-ny (America/New_York, UTC-04:00 at the start): day 10 (Thu) 13:00Z-13:10Z = 0h 10m",
+        "merge: at day 10 (Thu) 13:30Z",
+        "  on the wall: day 10 (Thu) 08:15Z-13:30Z = 5h 15m",
+        "  working hours of the author anke-dev (Europe/Berlin, UTC+01:00 at the start): day 10 (Thu) 08:15Z-13:30Z = 5h 15m"
+      ]
+    },
+    {
+      "number": 121,
+      "author": "andres-co",
+      "authorZone": "America/Bogota",
+      "state": "merged",
+      "ready": "day 10 (Thu) 21:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "jonas-k",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 610,
+        "workingMinutes": 10,
+        "at": "day 11 (Fri) 07:10Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "jonas-k",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 610,
+        "workingMinutes": 10,
+        "at": "day 11 (Fri) 07:10Z"
+      },
+      "merge": {
+        "wallMinutes": 660,
+        "workingMinutes": 120,
+        "at": "day 11 (Fri) 08:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 10 (Thu) 21:00Z-day 11 (Fri) 08:00Z",
+        "first review: jonas-k (Europe/Berlin), APPROVED, at day 11 (Fri) 07:10Z",
+        "  on the wall: day 10 (Thu) 21:00Z-day 11 (Fri) 07:10Z = 10h 10m",
+        "  working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 11 (Fri) 07:00Z-07:10Z = 0h 10m",
+        "first approval: jonas-k (Europe/Berlin) at day 11 (Fri) 07:10Z",
+        "  on the wall: day 10 (Thu) 21:00Z-day 11 (Fri) 07:10Z = 10h 10m",
+        "  working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 11 (Fri) 07:00Z-07:10Z = 0h 10m",
+        "merge: at day 11 (Fri) 08:00Z",
+        "  on the wall: day 10 (Thu) 21:00Z-day 11 (Fri) 08:00Z = 11h 00m",
+        "  working hours of the author andres-co (America/Bogota, UTC-05:00 at the start): day 10 (Thu) 21:00Z-23:00Z = 2h 00m"
+      ]
+    },
+    {
+      "number": 122,
+      "author": "ben-ny",
+      "authorZone": "America/New_York",
+      "state": "merged",
+      "ready": "day 11 (Fri) 12:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "lucia-co",
+        "zone": "America/Bogota",
+        "state": "COMMENTED",
+        "wallMinutes": 120,
+        "workingMinutes": 60,
+        "at": "day 11 (Fri) 14:00Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "anke-dev",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 150,
+        "workingMinutes": 150,
+        "at": "day 11 (Fri) 14:30Z"
+      },
+      "merge": {
+        "wallMinutes": 180,
+        "workingMinutes": 120,
+        "at": "day 11 (Fri) 15:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 11 (Fri) 12:00Z-15:00Z",
+        "first review: lucia-co (America/Bogota), COMMENTED, at day 11 (Fri) 14:00Z",
+        "  on the wall: day 11 (Fri) 12:00Z-14:00Z = 2h 00m",
+        "  working hours of lucia-co (America/Bogota, UTC-05:00 at the start): day 11 (Fri) 13:00Z-14:00Z = 1h 00m",
+        "first approval: anke-dev (Europe/Berlin) at day 11 (Fri) 14:30Z",
+        "  on the wall: day 11 (Fri) 12:00Z-14:30Z = 2h 30m",
+        "  working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 11 (Fri) 12:00Z-14:30Z = 2h 30m",
+        "merge: at day 11 (Fri) 15:00Z",
+        "  on the wall: day 11 (Fri) 12:00Z-15:00Z = 3h 00m",
+        "  working hours of the author ben-ny (America/New_York, UTC-04:00 at the start): day 11 (Fri) 13:00Z-15:00Z = 2h 00m"
+      ]
+    },
+    {
+      "number": 123,
+      "author": "jonas-k",
+      "authorZone": "Europe/Berlin",
+      "state": "merged",
+      "ready": "day 11 (Fri) 15:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "maya-ny",
+        "zone": "America/New_York",
+        "state": "COMMENTED",
+        "wallMinutes": 4200,
+        "workingMinutes": 360,
+        "at": "day 14 (Mon) 13:00Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "maya-ny",
+        "zone": "America/New_York",
+        "state": "APPROVED",
+        "wallMinutes": 4260,
+        "workingMinutes": 420,
+        "at": "day 14 (Mon) 14:00Z"
+      },
+      "merge": {
+        "wallMinutes": 4320,
+        "workingMinutes": 510,
+        "at": "day 14 (Mon) 15:00Z"
+      },
+      "skippedReviews": {},
+      "late": true,
+      "explain": [
+        "ready for review and open: day 11 (Fri) 15:00Z-day 14 (Mon) 15:00Z",
+        "first review: maya-ny (America/New_York), COMMENTED, at day 14 (Mon) 13:00Z",
+        "  on the wall: day 11 (Fri) 15:00Z-day 14 (Mon) 13:00Z = 70h 00m",
+        "  working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 11 (Fri) 15:00Z-16:30Z, day 11 (Fri) 17:30Z-21:30Z, day 14 (Mon) 12:30Z-13:00Z = 6h 00m",
+        "first approval: maya-ny (America/New_York) at day 14 (Mon) 14:00Z",
+        "  on the wall: day 11 (Fri) 15:00Z-day 14 (Mon) 14:00Z = 71h 00m",
+        "  working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 11 (Fri) 15:00Z-16:30Z, day 11 (Fri) 17:30Z-21:30Z, day 14 (Mon) 12:30Z-14:00Z = 7h 00m",
+        "merge: at day 14 (Mon) 15:00Z",
+        "  on the wall: day 11 (Fri) 15:00Z-day 14 (Mon) 15:00Z = 72h 00m",
+        "  working hours of the author jonas-k (Europe/Berlin, UTC+01:00 at the start): day 11 (Fri) 15:00Z-15:30Z, day 14 (Mon) 07:00Z-15:00Z = 8h 30m"
+      ]
+    },
+    {
+      "number": 124,
+      "author": "lucia-co",
+      "authorZone": "America/Bogota",
+      "state": "merged",
+      "ready": "day 14 (Mon) 13:20Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "ben-ny",
+        "zone": "America/New_York",
+        "state": "CHANGES_REQUESTED",
+        "wallMinutes": 100,
+        "workingMinutes": 100,
+        "at": "day 14 (Mon) 15:00Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "jonas-k",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 1180,
+        "workingMinutes": 250,
+        "at": "day 15 (Tue) 09:00Z"
+      },
+      "merge": {
+        "wallMinutes": 1240,
+        "workingMinutes": 460,
+        "at": "day 15 (Tue) 10:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 14 (Mon) 13:20Z-day 15 (Tue) 10:00Z",
+        "first review: ben-ny (America/New_York), CHANGES_REQUESTED, at day 14 (Mon) 15:00Z",
+        "  on the wall: day 14 (Mon) 13:20Z-15:00Z = 1h 40m",
+        "  working hours of ben-ny (America/New_York, UTC-04:00 at the start): day 14 (Mon) 13:20Z-15:00Z = 1h 40m",
+        "first approval: jonas-k (Europe/Berlin) at day 15 (Tue) 09:00Z",
+        "  on the wall: day 14 (Mon) 13:20Z-day 15 (Tue) 09:00Z = 19h 40m",
+        "  working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 14 (Mon) 13:20Z-15:30Z, day 15 (Tue) 07:00Z-09:00Z = 4h 10m",
+        "merge: at day 15 (Tue) 10:00Z",
+        "  on the wall: day 14 (Mon) 13:20Z-day 15 (Tue) 10:00Z = 20h 40m",
+        "  working hours of the author lucia-co (America/Bogota, UTC-05:00 at the start): day 14 (Mon) 13:20Z-17:00Z, day 14 (Mon) 18:00Z-22:00Z = 7h 40m"
+      ]
+    },
+    {
+      "number": 125,
+      "author": "maya-ny",
+      "authorZone": "America/New_York",
+      "state": "merged",
+      "ready": "day 14 (Mon) 13:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "andres-co",
+        "zone": "America/Bogota",
+        "state": "APPROVED",
+        "wallMinutes": 360,
+        "workingMinutes": 240,
+        "at": "day 15 (Tue) 14:00Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "andres-co",
+        "zone": "America/Bogota",
+        "state": "APPROVED",
+        "wallMinutes": 360,
+        "workingMinutes": 240,
+        "at": "day 15 (Tue) 14:00Z"
+      },
+      "merge": {
+        "wallMinutes": 420,
+        "workingMinutes": 360,
+        "at": "day 15 (Tue) 15:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 14 (Mon) 13:00Z-18:00Z, day 15 (Tue) 13:00Z-15:00Z",
+        "first review: andres-co (America/Bogota), APPROVED, at day 15 (Tue) 14:00Z",
+        "  on the wall: day 14 (Mon) 13:00Z-18:00Z, day 15 (Tue) 13:00Z-14:00Z = 6h 00m",
+        "  working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 14 (Mon) 14:00Z-18:00Z = 4h 00m",
+        "first approval: andres-co (America/Bogota) at day 15 (Tue) 14:00Z",
+        "  on the wall: day 14 (Mon) 13:00Z-18:00Z, day 15 (Tue) 13:00Z-14:00Z = 6h 00m",
+        "  working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 14 (Mon) 14:00Z-18:00Z = 4h 00m",
+        "merge: at day 15 (Tue) 15:00Z",
+        "  on the wall: day 14 (Mon) 13:00Z-18:00Z, day 15 (Tue) 13:00Z-15:00Z = 7h 00m",
+        "  working hours of the author maya-ny (America/New_York, UTC-04:00 at the start): day 14 (Mon) 13:00Z-16:30Z, day 14 (Mon) 17:30Z-18:00Z, day 15 (Tue) 13:00Z-15:00Z = 6h 00m"
+      ]
+    },
+    {
+      "number": 126,
+      "author": "anke-dev",
+      "authorZone": "Europe/Berlin",
+      "state": "merged",
+      "ready": "day 15 (Tue) 08:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "maya-ny",
+        "zone": "America/New_York",
+        "state": "APPROVED",
+        "wallMinutes": 280,
+        "workingMinutes": 10,
+        "at": "day 15 (Tue) 12:40Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "maya-ny",
+        "zone": "America/New_York",
+        "state": "APPROVED",
+        "wallMinutes": 280,
+        "workingMinutes": 10,
+        "at": "day 15 (Tue) 12:40Z"
+      },
+      "merge": {
+        "wallMinutes": 300,
+        "workingMinutes": 300,
+        "at": "day 15 (Tue) 13:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 15 (Tue) 08:00Z-13:00Z",
+        "first review: maya-ny (America/New_York), APPROVED, at day 15 (Tue) 12:40Z",
+        "  on the wall: day 15 (Tue) 08:00Z-12:40Z = 4h 40m",
+        "  working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 15 (Tue) 12:30Z-12:40Z = 0h 10m",
+        "first approval: maya-ny (America/New_York) at day 15 (Tue) 12:40Z",
+        "  on the wall: day 15 (Tue) 08:00Z-12:40Z = 4h 40m",
+        "  working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 15 (Tue) 12:30Z-12:40Z = 0h 10m",
+        "merge: at day 15 (Tue) 13:00Z",
+        "  on the wall: day 15 (Tue) 08:00Z-13:00Z = 5h 00m",
+        "  working hours of the author anke-dev (Europe/Berlin, UTC+01:00 at the start): day 15 (Tue) 08:00Z-13:00Z = 5h 00m"
+      ]
+    },
+    {
+      "number": 127,
+      "author": "andres-co",
+      "authorZone": "America/Bogota",
+      "state": "open",
+      "ready": "day 16 (Wed) 14:00Z",
+      "startedAsDraft": false,
+      "firstReview": null,
+      "unreviewed": {
+        "kind": "as-of",
+        "end": "day 32 (Fri) 18:00Z",
+        "wallMinutes": 23280,
+        "workingMinutes": 11340
+      },
+      "firstApproval": null,
+      "merge": null,
+      "skippedReviews": {},
+      "late": true,
+      "explain": [
+        "ready for review and open: from day 16 (Wed) 14:00Z, still open",
+        "first review: none; waited until --as-of at day 32 (Fri) 18:00Z",
+        "  on the wall: day 16 (Wed) 14:00Z-day 32 (Fri) 18:00Z = 388h 00m",
+        "  working hours of at least one other person of the team: day 16 (Wed) 14:00Z-22:00Z, day 17 (Thu) 07:00Z-22:00Z, day 18 (Fri) 07:00Z-22:00Z, day 21 (Mon) 07:00Z-22:00Z, day 22 (Tue) 07:00Z-22:00Z, day 23 (Wed) 07:00Z-22:00Z, day 24 (Thu) 07:00Z-22:00Z, day 25 (Fri) 07:00Z-22:00Z, day 28 (Mon) 06:00Z-22:00Z, day 29 (Tue) 06:00Z-22:00Z, day 30 (Wed) 06:00Z-22:00Z, day 31 (Thu) 06:00Z-22:00Z, day 32 (Fri) 06:00Z-18:00Z = 189h 00m"
+      ]
+    },
+    {
+      "number": 129,
+      "author": "ben-ny",
+      "authorZone": "America/New_York",
+      "state": "merged",
+      "ready": "day 17 (Thu) 13:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "anke-dev",
+        "zone": "Europe/Berlin",
+        "state": "COMMENTED",
+        "wallMinutes": 60,
+        "workingMinutes": 60,
+        "at": "day 17 (Thu) 14:00Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "anke-dev",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 1160,
+        "workingMinutes": 230,
+        "at": "day 18 (Fri) 08:20Z"
+      },
+      "merge": {
+        "wallMinutes": 1200,
+        "workingMinutes": 480,
+        "at": "day 18 (Fri) 09:00Z"
+      },
+      "skippedReviews": {
+        "bot": 1
+      },
+      "late": false,
+      "explain": [
+        "ready for review and open: day 17 (Thu) 13:00Z-day 18 (Fri) 09:00Z",
+        "first review: anke-dev (Europe/Berlin), COMMENTED, at day 17 (Thu) 14:00Z",
+        "  on the wall: day 17 (Thu) 13:00Z-14:00Z = 1h 00m",
+        "  working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 17 (Thu) 13:00Z-14:00Z = 1h 00m",
+        "first approval: anke-dev (Europe/Berlin) at day 18 (Fri) 08:20Z",
+        "  on the wall: day 17 (Thu) 13:00Z-day 18 (Fri) 08:20Z = 19h 20m",
+        "  working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 17 (Thu) 13:00Z-16:30Z, day 18 (Fri) 08:00Z-08:20Z = 3h 50m",
+        "merge: at day 18 (Fri) 09:00Z",
+        "  on the wall: day 17 (Thu) 13:00Z-day 18 (Fri) 09:00Z = 20h 00m",
+        "  working hours of the author ben-ny (America/New_York, UTC-04:00 at the start): day 17 (Thu) 13:00Z-21:00Z = 8h 00m"
+      ]
+    },
+    {
+      "number": 131,
+      "author": "lucia-co",
+      "authorZone": "America/Bogota",
+      "state": "merged",
+      "ready": "day 21 (Mon) 13:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "maya-ny",
+        "zone": "America/New_York",
+        "state": "APPROVED",
+        "wallMinutes": 30,
+        "workingMinutes": 30,
+        "at": "day 21 (Mon) 13:30Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "maya-ny",
+        "zone": "America/New_York",
+        "state": "APPROVED",
+        "wallMinutes": 30,
+        "workingMinutes": 30,
+        "at": "day 21 (Mon) 13:30Z"
+      },
+      "merge": {
+        "wallMinutes": 60,
+        "workingMinutes": 60,
+        "at": "day 21 (Mon) 14:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 21 (Mon) 13:00Z-14:00Z",
+        "first review: maya-ny (America/New_York), APPROVED, at day 21 (Mon) 13:30Z",
+        "  on the wall: day 21 (Mon) 13:00Z-13:30Z = 0h 30m",
+        "  working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 21 (Mon) 13:00Z-13:30Z = 0h 30m",
+        "first approval: maya-ny (America/New_York) at day 21 (Mon) 13:30Z",
+        "  on the wall: day 21 (Mon) 13:00Z-13:30Z = 0h 30m",
+        "  working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 21 (Mon) 13:00Z-13:30Z = 0h 30m",
+        "merge: at day 21 (Mon) 14:00Z",
+        "  on the wall: day 21 (Mon) 13:00Z-14:00Z = 1h 00m",
+        "  working hours of the author lucia-co (America/Bogota, UTC-05:00 at the start): day 21 (Mon) 13:00Z-14:00Z = 1h 00m"
+      ]
+    },
+    {
+      "number": 132,
+      "author": "anke-dev",
+      "authorZone": "Europe/Berlin",
+      "state": "merged",
+      "ready": "day 22 (Tue) 15:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "andres-co",
+        "zone": "America/Bogota",
+        "state": "COMMENTED",
+        "wallMinutes": 60,
+        "workingMinutes": 60,
+        "at": "day 22 (Tue) 16:00Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "lucia-co",
+        "zone": "America/Bogota",
+        "state": "APPROVED",
+        "wallMinutes": 90,
+        "workingMinutes": 90,
+        "at": "day 22 (Tue) 16:30Z"
+      },
+      "merge": {
+        "wallMinutes": 1020,
+        "workingMinutes": 90,
+        "at": "day 23 (Wed) 08:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 22 (Tue) 15:00Z-day 23 (Wed) 08:00Z",
+        "first review: andres-co (America/Bogota), COMMENTED, at day 22 (Tue) 16:00Z",
+        "  on the wall: day 22 (Tue) 15:00Z-16:00Z = 1h 00m",
+        "  working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 22 (Tue) 15:00Z-16:00Z = 1h 00m",
+        "first approval: lucia-co (America/Bogota) at day 22 (Tue) 16:30Z",
+        "  on the wall: day 22 (Tue) 15:00Z-16:30Z = 1h 30m",
+        "  working hours of lucia-co (America/Bogota, UTC-05:00 at the start): day 22 (Tue) 15:00Z-16:30Z = 1h 30m",
+        "merge: at day 23 (Wed) 08:00Z",
+        "  on the wall: day 22 (Tue) 15:00Z-day 23 (Wed) 08:00Z = 17h 00m",
+        "  working hours of the author anke-dev (Europe/Berlin, UTC+01:00 at the start): day 22 (Tue) 15:00Z-16:30Z = 1h 30m"
+      ]
+    },
+    {
+      "number": 133,
+      "author": "maya-ny",
+      "authorZone": "America/New_York",
+      "state": "merged",
+      "ready": "day 23 (Wed) 12:45Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "jonas-k",
+        "zone": "Europe/Berlin",
+        "state": "COMMENTED",
+        "wallMinutes": 1100,
+        "workingMinutes": 170,
+        "at": "day 24 (Thu) 07:05Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "anke-dev",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 1155,
+        "workingMinutes": 225,
+        "at": "day 24 (Thu) 08:00Z"
+      },
+      "merge": {
+        "wallMinutes": 1185,
+        "workingMinutes": 465,
+        "at": "day 24 (Thu) 08:30Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 23 (Wed) 12:45Z-day 24 (Thu) 08:30Z (no issue events given)",
+        "first review: jonas-k (Europe/Berlin), COMMENTED, at day 24 (Thu) 07:05Z",
+        "  on the wall: day 23 (Wed) 12:45Z-day 24 (Thu) 07:05Z = 18h 20m",
+        "  working hours of jonas-k (Europe/Berlin, UTC+01:00 at the start): day 23 (Wed) 12:45Z-15:30Z, day 24 (Thu) 07:00Z-07:05Z = 2h 50m",
+        "first approval: anke-dev (Europe/Berlin) at day 24 (Thu) 08:00Z",
+        "  on the wall: day 23 (Wed) 12:45Z-day 24 (Thu) 08:00Z = 19h 15m",
+        "  working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 23 (Wed) 12:45Z-16:30Z = 3h 45m",
+        "merge: at day 24 (Thu) 08:30Z",
+        "  on the wall: day 23 (Wed) 12:45Z-day 24 (Thu) 08:30Z = 19h 45m",
+        "  working hours of the author maya-ny (America/New_York, UTC-04:00 at the start): day 23 (Wed) 12:45Z-16:30Z, day 23 (Wed) 17:30Z-21:30Z = 7h 45m"
+      ]
+    },
+    {
+      "number": 134,
+      "author": "andres-co",
+      "authorZone": "America/Bogota",
+      "state": "merged",
+      "ready": "day 25 (Fri) 22:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "anke-dev",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 3430,
+        "workingMinutes": 10,
+        "at": "day 28 (Mon) 07:10Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "anke-dev",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 3430,
+        "workingMinutes": 10,
+        "at": "day 28 (Mon) 07:10Z"
+      },
+      "merge": {
+        "wallMinutes": 3480,
+        "workingMinutes": 60,
+        "at": "day 28 (Mon) 08:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 25 (Fri) 22:00Z-day 28 (Mon) 08:00Z",
+        "first review: anke-dev (Europe/Berlin), APPROVED, at day 28 (Mon) 07:10Z",
+        "  on the wall: day 25 (Fri) 22:00Z-day 28 (Mon) 07:10Z = 57h 10m",
+        "  working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 28 (Mon) 07:00Z-07:10Z = 0h 10m",
+        "first approval: anke-dev (Europe/Berlin) at day 28 (Mon) 07:10Z",
+        "  on the wall: day 25 (Fri) 22:00Z-day 28 (Mon) 07:10Z = 57h 10m",
+        "  working hours of anke-dev (Europe/Berlin, UTC+01:00 at the start): day 28 (Mon) 07:00Z-07:10Z = 0h 10m",
+        "merge: at day 28 (Mon) 08:00Z",
+        "  on the wall: day 25 (Fri) 22:00Z-day 28 (Mon) 08:00Z = 58h 00m",
+        "  working hours of the author andres-co (America/Bogota, UTC-05:00 at the start): day 25 (Fri) 22:00Z-23:00Z = 1h 00m"
+      ]
+    },
+    {
+      "number": 135,
+      "author": "jonas-k",
+      "authorZone": "Europe/Berlin",
+      "state": "merged",
+      "ready": "day 28 (Mon) 06:30Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "ben-ny",
+        "zone": "America/New_York",
+        "state": "COMMENTED",
+        "wallMinutes": 410,
+        "workingMinutes": 20,
+        "at": "day 28 (Mon) 13:20Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "ben-ny",
+        "zone": "America/New_York",
+        "state": "APPROVED",
+        "wallMinutes": 510,
+        "workingMinutes": 120,
+        "at": "day 28 (Mon) 15:00Z"
+      },
+      "merge": {
+        "wallMinutes": 540,
+        "workingMinutes": 480,
+        "at": "day 28 (Mon) 15:30Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 28 (Mon) 06:30Z-15:30Z",
+        "first review: ben-ny (America/New_York), COMMENTED, at day 28 (Mon) 13:20Z",
+        "  on the wall: day 28 (Mon) 06:30Z-13:20Z = 6h 50m",
+        "  working hours of ben-ny (America/New_York, UTC-04:00 at the start): day 28 (Mon) 13:00Z-13:20Z = 0h 20m",
+        "first approval: ben-ny (America/New_York) at day 28 (Mon) 15:00Z",
+        "  on the wall: day 28 (Mon) 06:30Z-15:00Z = 8h 30m",
+        "  working hours of ben-ny (America/New_York, UTC-04:00 at the start): day 28 (Mon) 13:00Z-15:00Z = 2h 00m",
+        "merge: at day 28 (Mon) 15:30Z",
+        "  on the wall: day 28 (Mon) 06:30Z-15:30Z = 9h 00m",
+        "  working hours of the author jonas-k (Europe/Berlin, UTC+02:00 at the start): day 28 (Mon) 06:30Z-14:30Z = 8h 00m"
+      ]
+    },
+    {
+      "number": 136,
+      "author": "ben-ny",
+      "authorZone": "America/New_York",
+      "state": "merged",
+      "ready": "day 29 (Tue) 14:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "jonas-k",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 975,
+        "workingMinutes": 45,
+        "at": "day 30 (Wed) 06:15Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "jonas-k",
+        "zone": "Europe/Berlin",
+        "state": "APPROVED",
+        "wallMinutes": 975,
+        "workingMinutes": 45,
+        "at": "day 30 (Wed) 06:15Z"
+      },
+      "merge": {
+        "wallMinutes": 1020,
+        "workingMinutes": 420,
+        "at": "day 30 (Wed) 07:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 29 (Tue) 14:00Z-day 30 (Wed) 07:00Z",
+        "first review: jonas-k (Europe/Berlin), APPROVED, at day 30 (Wed) 06:15Z",
+        "  on the wall: day 29 (Tue) 14:00Z-day 30 (Wed) 06:15Z = 16h 15m",
+        "  working hours of jonas-k (Europe/Berlin, UTC+02:00 at the start): day 29 (Tue) 14:00Z-14:30Z, day 30 (Wed) 06:00Z-06:15Z = 0h 45m",
+        "first approval: jonas-k (Europe/Berlin) at day 30 (Wed) 06:15Z",
+        "  on the wall: day 29 (Tue) 14:00Z-day 30 (Wed) 06:15Z = 16h 15m",
+        "  working hours of jonas-k (Europe/Berlin, UTC+02:00 at the start): day 29 (Tue) 14:00Z-14:30Z, day 30 (Wed) 06:00Z-06:15Z = 0h 45m",
+        "merge: at day 30 (Wed) 07:00Z",
+        "  on the wall: day 29 (Tue) 14:00Z-day 30 (Wed) 07:00Z = 17h 00m",
+        "  working hours of the author ben-ny (America/New_York, UTC-04:00 at the start): day 29 (Tue) 14:00Z-21:00Z = 7h 00m"
+      ]
+    },
+    {
+      "number": 137,
+      "author": "lucia-co",
+      "authorZone": "America/Bogota",
+      "state": "merged",
+      "ready": "day 30 (Wed) 13:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "anke-dev",
+        "zone": "Europe/Berlin",
+        "state": "COMMENTED",
+        "wallMinutes": 60,
+        "workingMinutes": 60,
+        "at": "day 30 (Wed) 14:00Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "andres-co",
+        "zone": "America/Bogota",
+        "state": "APPROVED",
+        "wallMinutes": 120,
+        "workingMinutes": 60,
+        "at": "day 30 (Wed) 15:00Z"
+      },
+      "merge": {
+        "wallMinutes": 180,
+        "workingMinutes": 180,
+        "at": "day 30 (Wed) 16:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 30 (Wed) 13:00Z-16:00Z",
+        "first review: anke-dev (Europe/Berlin), COMMENTED, at day 30 (Wed) 14:00Z",
+        "  on the wall: day 30 (Wed) 13:00Z-14:00Z = 1h 00m",
+        "  working hours of anke-dev (Europe/Berlin, UTC+02:00 at the start): day 30 (Wed) 13:00Z-14:00Z = 1h 00m",
+        "first approval: andres-co (America/Bogota) at day 30 (Wed) 15:00Z",
+        "  on the wall: day 30 (Wed) 13:00Z-15:00Z = 2h 00m",
+        "  working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 30 (Wed) 14:00Z-15:00Z = 1h 00m",
+        "merge: at day 30 (Wed) 16:00Z",
+        "  on the wall: day 30 (Wed) 13:00Z-16:00Z = 3h 00m",
+        "  working hours of the author lucia-co (America/Bogota, UTC-05:00 at the start): day 30 (Wed) 13:00Z-16:00Z = 3h 00m"
+      ]
+    },
+    {
+      "number": 138,
+      "author": "maya-ny",
+      "authorZone": "America/New_York",
+      "state": "merged",
+      "ready": "day 31 (Thu) 13:00Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "lucia-co",
+        "zone": "America/Bogota",
+        "state": "APPROVED",
+        "wallMinutes": 1710,
+        "workingMinutes": 720,
+        "at": "day 32 (Fri) 17:30Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "lucia-co",
+        "zone": "America/Bogota",
+        "state": "APPROVED",
+        "wallMinutes": 1710,
+        "workingMinutes": 720,
+        "at": "day 32 (Fri) 17:30Z"
+      },
+      "merge": {
+        "wallMinutes": 1740,
+        "workingMinutes": 720,
+        "at": "day 32 (Fri) 18:00Z"
+      },
+      "skippedReviews": {},
+      "late": true,
+      "explain": [
+        "ready for review and open: day 31 (Thu) 13:00Z-day 32 (Fri) 18:00Z",
+        "first review: lucia-co (America/Bogota), APPROVED, at day 32 (Fri) 17:30Z",
+        "  on the wall: day 31 (Thu) 13:00Z-day 32 (Fri) 17:30Z = 28h 30m",
+        "  working hours of lucia-co (America/Bogota, UTC-05:00 at the start): day 31 (Thu) 13:00Z-17:00Z, day 31 (Thu) 18:00Z-22:00Z, day 32 (Fri) 13:00Z-17:00Z = 12h 00m",
+        "first approval: lucia-co (America/Bogota) at day 32 (Fri) 17:30Z",
+        "  on the wall: day 31 (Thu) 13:00Z-day 32 (Fri) 17:30Z = 28h 30m",
+        "  working hours of lucia-co (America/Bogota, UTC-05:00 at the start): day 31 (Thu) 13:00Z-17:00Z, day 31 (Thu) 18:00Z-22:00Z, day 32 (Fri) 13:00Z-17:00Z = 12h 00m",
+        "merge: at day 32 (Fri) 18:00Z",
+        "  on the wall: day 31 (Thu) 13:00Z-day 32 (Fri) 18:00Z = 29h 00m",
+        "  working hours of the author maya-ny (America/New_York, UTC-04:00 at the start): day 31 (Thu) 13:00Z-16:30Z, day 31 (Thu) 17:30Z-21:30Z, day 32 (Fri) 12:30Z-16:30Z, day 32 (Fri) 17:30Z-18:00Z = 12h 00m"
+      ]
+    },
+    {
+      "number": 139,
+      "author": "anke-dev",
+      "authorZone": "Europe/Berlin",
+      "state": "merged",
+      "ready": "day 32 (Fri) 07:30Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "andres-co",
+        "zone": "America/Bogota",
+        "state": "APPROVED",
+        "wallMinutes": 430,
+        "workingMinutes": 40,
+        "at": "day 32 (Fri) 14:40Z"
+      },
+      "unreviewed": null,
+      "firstApproval": {
+        "by": "andres-co",
+        "zone": "America/Bogota",
+        "state": "APPROVED",
+        "wallMinutes": 430,
+        "workingMinutes": 40,
+        "at": "day 32 (Fri) 14:40Z"
+      },
+      "merge": {
+        "wallMinutes": 510,
+        "workingMinutes": 480,
+        "at": "day 32 (Fri) 16:00Z"
+      },
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: day 32 (Fri) 07:30Z-16:00Z",
+        "first review: andres-co (America/Bogota), APPROVED, at day 32 (Fri) 14:40Z",
+        "  on the wall: day 32 (Fri) 07:30Z-14:40Z = 7h 10m",
+        "  working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 32 (Fri) 14:00Z-14:40Z = 0h 40m",
+        "first approval: andres-co (America/Bogota) at day 32 (Fri) 14:40Z",
+        "  on the wall: day 32 (Fri) 07:30Z-14:40Z = 7h 10m",
+        "  working hours of andres-co (America/Bogota, UTC-05:00 at the start): day 32 (Fri) 14:00Z-14:40Z = 0h 40m",
+        "merge: at day 32 (Fri) 16:00Z",
+        "  on the wall: day 32 (Fri) 07:30Z-16:00Z = 8h 30m",
+        "  working hours of the author anke-dev (Europe/Berlin, UTC+02:00 at the start): day 32 (Fri) 07:30Z-15:30Z = 8h 00m"
+      ]
+    },
+    {
+      "number": 140,
+      "author": "jonas-k",
+      "authorZone": "Europe/Berlin",
+      "state": "open",
+      "ready": "day 32 (Fri) 08:10Z",
+      "startedAsDraft": false,
+      "firstReview": {
+        "by": "maya-ny",
+        "zone": "America/New_York",
+        "state": "COMMENTED",
+        "wallMinutes": 400,
+        "workingMinutes": 140,
+        "at": "day 32 (Fri) 14:50Z"
+      },
+      "unreviewed": null,
+      "firstApproval": null,
+      "merge": null,
+      "skippedReviews": {},
+      "late": false,
+      "explain": [
+        "ready for review and open: from day 32 (Fri) 08:10Z, still open",
+        "first review: maya-ny (America/New_York), COMMENTED, at day 32 (Fri) 14:50Z",
+        "  on the wall: day 32 (Fri) 08:10Z-14:50Z = 6h 40m",
+        "  working hours of maya-ny (America/New_York, UTC-04:00 at the start): day 32 (Fri) 12:30Z-14:50Z = 2h 20m"
+      ]
+    }
+  ],
+  "basis": [
+    {
+      "key": "ghReadyForReview",
+      "text": "A draft pull request was marked as ready for review.",
+      "section": "ready_for_review",
+      "page": "https://docs.github.com/en/rest/using-the-rest-api/issue-event-types"
+    },
+    {
+      "key": "ghReviewsList",
+      "text": "Lists all reviews for a specified pull request. The list of reviews returns in chronological order.",
+      "section": "List reviews for a pull request",
+      "page": "https://docs.github.com/en/rest/pulls/reviews"
+    },
+    {
+      "key": "ghDismiss",
+      "text": "Dismisses a specified review on a pull request.",
+      "section": "Dismiss a review for a pull request",
+      "page": "https://docs.github.com/en/rest/pulls/reviews"
+    },
+    {
+      "key": "ghMerged",
+      "text": "The pull request was merged.",
+      "section": "merged",
+      "page": "https://docs.github.com/en/rest/using-the-rest-api/issue-event-types"
+    },
+    {
+      "key": "ghTimestampsUtc",
+      "text": "Timestamps returned by the API are in UTC time, ISO 8601 format.",
+      "section": "Timezones and the REST API",
+      "page": "https://docs.github.com/en/rest/using-the-rest-api/timezones-and-the-rest-api"
+    },
+    {
+      "key": "rfcUtc",
+      "text": "Because the daylight saving rules for local time zones are so convoluted and can change based on local law at unpredictable times, true interoperability is best achieved by using Coordinated Universal Time (UTC).",
+      "section": "4.1. Coordinated Universal Time (UTC)",
+      "page": "https://www.rfc-editor.org/rfc/rfc3339.txt"
+    },
+    {
+      "key": "tzUpdated",
+      "text": "It is updated periodically to reflect changes made by political bodies to time zone boundaries, UTC offsets, and daylight-saving rules.",
+      "section": "Time Zones",
+      "page": "https://www.iana.org/time-zones"
+    }
+  ],
+  "notes": [
+    "left out: 2 pull requests opened by a bot: #109 and #130",
+    "left out: 1 pull request opened by a login that is not in the team file: #117",
+    "left out: 1 pull request never ready for review (still a draft): #128",
+    "not a first review: 1 review by the author of the pull request",
+    "not a first review: 1 review by a bot",
+    "not a first review: 1 review never submitted (PENDING)",
+    "not a first review: 1 review submitted before the pull request was first ready for review",
+    "not a first review: 1 review by a login that is not in the team file",
+    "1 pull request has no list of issue events (#133): each is taken as ready from created_at, so one that began as a draft is counted from the moment it was opened"
+  ],
+  "verdict": {
+    "pass": false,
+    "text": "FAIL - 6 of 36 pull requests waited longer than 4h 00m of working hours for a first review"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "Example platform team",
+  "people": [
+    { "login": "anke-dev", "zone": "Europe/Berlin", "hours": { "mon-fri": ["09:00-17:30"] } },
+    { "login": "jonas-k", "zone": "Europe/Berlin", "hours": { "mon-fri": ["08:00-16:30"] } },
+    { "login": "ben-ny", "zone": "America/New_York", "hours": { "mon-fri": ["09:00-17:00"] } },
+    { "login": "maya-ny", "zone": "America/New_York", "hours": { "mon-fri": ["08:30-12:30", "13:30-17:30"] } },
+    { "login": "lucia-co", "zone": "America/Bogota", "hours": { "mon-fri": ["08:00-12:00", "13:00-17:00"] } },
+    { "login": "andres-co", "zone": "America/Bogota", "hours": { "mon-fri": ["09:00-18:00"] } }
+  ]
+}

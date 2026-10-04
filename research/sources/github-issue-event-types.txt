@@ -1,0 +1,84 @@
+Source: https://docs.github.com/en/rest/using-the-rest-api/issue-event-types
+
+Issue event types
+
+For the REST APIs for issue events and timeline events, learn about each event type, the triggering action on GitHub, and each event's unique properties.
+
+Issue events are triggered by activity in issues and pull requests and are available in the REST API for Issue events and Timeline events. Each event type specifies whether the event is available in the REST API for issue events or timeline events.
+
+GitHub's REST API considers every pull request to be an issue, but not every issue is a pull request. For this reason, the Issue Events and Timeline Events endpoints may return both issues and pull requests in the response. Pull requests have a pull_request property in the issue object. Because pull requests are issues, issue and pull request numbers do not overlap in a repository.
+
+[...]
+
+Issue event object common properties
+
+Issue events all have the same object structure, except events that are only available in the REST API for timeline events.
+
+| Name       | Type    | Description                                         |
+| id         | integer | The unique identifier of the event.                 |
+[...]
+| event      | string  | Identifies the actual type of event that occurred.  |
+[...]
+| created_at | string  | The timestamp indicating when the event occurred.   |
+
+[...]
+
+closed
+
+The issue or pull request was closed.
+
+[...]
+
+convert_to_draft
+
+The pull request was converted to draft mode.
+
+This event is available for the following issue types.
+
+| Pull requests | REST API for issue events: supported | REST API for timeline events: supported |
+
+[...]
+
+merged
+
+The pull request was merged.
+
+[...]
+
+ready_for_review
+
+A draft pull request was marked as ready for review.
+
+This event is available for the following issue types.
+
+| Pull requests | REST API for issue events: supported | REST API for timeline events: supported |
+
+[...]
+
+reopened
+
+The issue or pull request was reopened.
+
+This event is available for the following issue types.
+
+| Issues        | REST API for issue events: supported | REST API for timeline events: supported |
+| Pull requests | REST API for issue events: supported | REST API for timeline events: supported |
+
+[...]
+
+reviewed
+
+The pull request was reviewed.
+
+This event is available for the following issue types.
+
+| Pull requests | REST API for issue events: not supported | REST API for timeline events: supported |
+
+Properties for reviewed
+
+This events properties do not use the same structure as the issue event object common properties. The following properties are returned for this event.
+
+[...]
+| submitted_at | string | The timestamp indicating when the review was submitted. |
+| state        | string | The state of the submitted review. Can be one of: commented, changes_requested, approved or dismissed. |
+[...]

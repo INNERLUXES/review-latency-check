@@ -1,0 +1,94 @@
+Source: https://docs.github.com/en/rest/pulls/reviews
+
+REST API endpoints for pull request reviews
+
+About pull request reviews
+
+Pull Request Reviews are groups of pull request review comments on a pull request, grouped together with a state and optional body comment.
+
+[...]
+
+List reviews for a pull request
+
+GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews
+
+Lists all reviews for a specified pull request. The list of reviews returns in chronological order.
+
+[...]
+
+pull_number (integer) (required)
+  The number that identifies the pull request.
+
+[...]
+
+Response schema (Status: 200):
+
+Array of Pull Request Review:
+
+  * id: required, integer, format: int64
+  * node_id: required, string
+  * user: required, any of:
+    * null
+    * Simple User
+      * name: string or null
+      * email: string or null
+      * login: required, string
+      [...]
+      * type: required, string
+      [...]
+  * body: required, string
+  * state: required, string
+  [...]
+  * submitted_at: string, format: date-time
+  * commit_id: required, string or null
+  [...]
+
+Example response
+
+[
+  {
+    "id": 80,
+    [...]
+    "user": {
+      "login": "octocat",
+      [...]
+      "type": "User",
+      "site_admin": false
+    },
+    "body": "Here is the body for the review.",
+    "state": "APPROVED",
+    [...]
+    "submitted_at": [...]
+    [...]
+  }
+]
+
+Create a review for a pull request
+
+[...]
+
+Pull request reviews created in the PENDING state are not submitted and therefore do not include the submitted_at property in the response. To create a pending review for a pull request, leave the event parameter blank.
+
+[...]
+
+event (string)
+  The review action you want to perform. The review actions include: APPROVE, REQUEST_CHANGES, or COMMENT. By leaving this blank, you set the review action state to PENDING, which means you will need to submit the pull request review when you are ready.
+  Can be one of: APPROVE, REQUEST_CHANGES, COMMENT
+
+[...]
+
+Dismiss a review for a pull request
+
+PUT /repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/dismissals
+
+Dismisses a specified review on a pull request.
+
+[...]
+
+  "state": "CHANGES_REQUESTED",
+
+[...]
+
+  "state": "DISMISSED",
+
+[...]

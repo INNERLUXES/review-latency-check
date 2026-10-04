@@ -1,0 +1,6 @@
+{
+  "firstReviewLimit": { "measure": "working", "minutes": 240 },
+  "percentile": 90,
+  "bots": ["*[bot]", "release-helper"],
+  "unknownLogins": "exclude"
+}

@@ -1,0 +1,96 @@
+review-latency-check: pulls.json, team team.json (Example platform team), configuration config.json
+team: 6 people in 3 time zones
+  anke-dev   Europe/Berlin     mon-fri 09:00-17:30
+  jonas-k    Europe/Berlin     mon-fri 08:00-16:30
+  ben-ny     America/New_York  mon-fri 09:00-17:00
+  maya-ny    America/New_York  mon-fri 08:30-12:30, 13:30-17:30
+  lucia-co   America/Bogota    mon-fri 08:00-12:00, 13:00-17:00
+  andres-co  America/Bogota    mon-fri 09:00-18:00
+limit: a first review within 4h 00m (240 minutes) of the working hours of the reviewer
+percentile: p90 and the median, both by the nearest-rank method
+bots: *[bot], release-helper and every account of type Bot
+data: day 0 (Mon) 08:30Z to day 32 (Fri) 18:00Z; open pull requests measured until --as-of day 32 (Fri) 18:00Z
+clock changes: America/New_York from UTC-05:00 to UTC-04:00 on day 6 (Sun); Europe/Berlin from UTC+01:00 to UTC+02:00 on day 27 (Sun)
+pulls: 40 read, 36 measured: 34 reviewed, 1 closed with no review, 1 open with no review; 33 approved, 33 merged; 4 left out
+
+Past the limit (6)
+
+  #111  jonas-k (Europe/Berlin), first review by ben-ny (America/New_York) at day 4 (Fri) 21:00Z      7h 00m on the wall, 7h 00m working
+  #116  jonas-k (Europe/Berlin), first review by anke-dev (Europe/Berlin) at day 8 (Tue) 12:30Z       4h 30m on the wall, 4h 30m working
+  #119  maya-ny (America/New_York), no review, closed at day 11 (Fri) 19:00Z                          47h 00m on the wall, 31h 00m working
+  #123  jonas-k (Europe/Berlin), first review by maya-ny (America/New_York) at day 14 (Mon) 13:00Z    70h 00m on the wall, 6h 00m working
+  #127  andres-co (America/Bogota), no review, still open at --as-of day 32 (Fri) 18:00Z              388h 00m on the wall, 189h 00m working
+  #138  maya-ny (America/New_York), first review by lucia-co (America/Bogota) at day 32 (Fri) 17:30Z  28h 30m on the wall, 12h 00m working
+
+First review by author zone and reviewer zone (wall / working hours of the reviewer)
+
+                                             wall                       working
+  author zone       reviewer zone     pulls  median   p90      max      median   p90      max
+  America/Bogota    America/Bogota    1      1h 40m   1h 40m   1h 40m   1h 10m   1h 10m   1h 10m
+  America/Bogota    America/New_York  4      0h 30m   16h 00m  16h 00m  0h 30m   1h 40m   1h 40m
+  America/Bogota    Europe/Berlin     5      16h 10m  59h 20m  59h 20m  0h 20m   1h 00m   1h 00m
+  America/New_York  America/Bogota    5      2h 00m   28h 30m  28h 30m  1h 30m   12h 00m  12h 00m
+  America/New_York  America/New_York  1      1h 30m   1h 30m   1h 30m   1h 30m   1h 30m   1h 30m
+  America/New_York  Europe/Berlin     5      16h 15m  18h 20m  18h 20m  1h 00m   2h 50m   2h 50m
+  Europe/Berlin     America/Bogota    3      3h 30m   7h 10m   7h 10m   0h 40m   1h 00m   1h 00m
+  Europe/Berlin     America/New_York  8      5h 50m   70h 00m  70h 00m  0h 20m   7h 00m   7h 00m
+  Europe/Berlin     Europe/Berlin     2      1h 30m   4h 30m   4h 30m   1h 00m   4h 30m   4h 30m
+
+Every measured pull together
+
+                                           wall                      working
+  wait            working hours of  pulls  median  p90      max      median   p90     max
+  first-review    the reviewer      34     4h 55m  28h 30m  70h 00m  1h 00m   4h 30m  12h 00m
+  first-approval  the approver      33     7h 30m  57h 10m  71h 00m  1h 30m   5h 00m  12h 00m
+  merge           the author        33     9h 00m  58h 00m  72h 00m  5h 00m   8h 00m  13h 00m
+
+Every pull (wall / working; * past the limit)
+
+  #101   anke-dev   ready day 0 (Mon) 08:30Z   review ben-ny 5h 50m / 0h 20m          approval 7h 30m / 2h 00m    merge 8h 00m / 8h 00m
+  #102   ben-ny     ready day 0 (Mon) 15:00Z   review anke-dev 17h 40m / 2h 10m       approval 17h 40m / 2h 10m   merge 18h 00m / 7h 00m
+  #103   lucia-co   ready day 0 (Mon) 13:30Z   review andres-co 1h 40m / 1h 10m       approval 1h 40m / 1h 10m    merge 2h 30m / 2h 30m
+  #104   jonas-k    ready day 1 (Tue) 07:30Z   review anke-dev 1h 30m / 1h 00m        approval 5h 30m / 5h 00m    merge 6h 00m / 6h 00m
+  #105   maya-ny    ready day 1 (Tue) 21:00Z   review jonas-k 10h 45m / 0h 45m        approval 10h 45m / 0h 45m   merge 17h 00m / 2h 00m
+  #106   andres-co  ready day 1 (Tue) 22:30Z   review ben-ny 16h 00m / 0h 30m         approval 16h 00m / 0h 30m   merge 16h 30m / 1h 30m
+  #107   anke-dev   ready day 2 (Wed) 13:00Z   review maya-ny 2h 00m / 1h 30m         approval 2h 00m / 1h 30m    merge 2h 30m / 2h 30m
+  #108   ben-ny     ready day 3 (Thu) 14:30Z   review lucia-co 1h 30m / 1h 30m        approval 2h 30m / 2h 30m    merge 3h 30m / 3h 30m
+  #110   lucia-co   ready day 4 (Fri) 20:00Z   review jonas-k 59h 20m / 0h 20m        approval 59h 20m / 0h 20m   merge 60h 00m / 2h 00m
+  #111*  jonas-k    ready day 4 (Fri) 14:00Z   review ben-ny 7h 00m / 7h 00m          approval 66h 30m / 3h 00m   merge 67h 00m / 3h 30m
+  #112   maya-ny    ready day 7 (Mon) 13:00Z   review andres-co 2h 00m / 1h 00m       approval 2h 00m / 1h 00m    merge 3h 00m / 3h 00m
+  #113   anke-dev   ready day 7 (Mon) 10:00Z   review lucia-co 3h 30m / 0h 30m        approval 28h 00m / 9h 00m   merge 28h 30m / 13h 00m
+  #114   andres-co  ready day 7 (Mon) 16:00Z   review anke-dev 16h 10m / 0h 40m       approval 17h 00m / 2h 00m   merge 18h 00m / 7h 00m
+  #115   ben-ny     ready day 8 (Tue) 13:30Z   review maya-ny 1h 30m / 1h 30m         approval 1h 30m / 1h 30m    merge 2h 30m / 2h 30m
+  #116*  jonas-k    ready day 8 (Tue) 08:00Z   review anke-dev 4h 30m / 4h 30m        approval 4h 30m / 4h 30m    merge 5h 00m / 5h 00m
+  #118   lucia-co   ready day 9 (Wed) 13:10Z   review ben-ny 0h 30m / 0h 30m          approval 0h 30m / 0h 30m    merge 0h 50m / 0h 50m
+  #119*  maya-ny    ready day 9 (Wed) 20:00Z   review none, closed 47h 00m / 31h 00m  approval -                  merge -
+  #120   anke-dev   ready day 10 (Thu) 08:15Z  review ben-ny 4h 55m / 0h 10m          approval 4h 55m / 0h 10m    merge 5h 15m / 5h 15m
+  #121   andres-co  ready day 10 (Thu) 21:00Z  review jonas-k 10h 10m / 0h 10m        approval 10h 10m / 0h 10m   merge 11h 00m / 2h 00m
+  #122   ben-ny     ready day 11 (Fri) 12:00Z  review lucia-co 2h 00m / 1h 00m        approval 2h 30m / 2h 30m    merge 3h 00m / 2h 00m
+  #123*  jonas-k    ready day 11 (Fri) 15:00Z  review maya-ny 70h 00m / 6h 00m        approval 71h 00m / 7h 00m   merge 72h 00m / 8h 30m
+  #124   lucia-co   ready day 14 (Mon) 13:20Z  review ben-ny 1h 40m / 1h 40m          approval 19h 40m / 4h 10m   merge 20h 40m / 7h 40m
+  #125   maya-ny    ready day 14 (Mon) 13:00Z  review andres-co 6h 00m / 4h 00m       approval 6h 00m / 4h 00m    merge 7h 00m / 6h 00m
+  #126   anke-dev   ready day 15 (Tue) 08:00Z  review maya-ny 4h 40m / 0h 10m         approval 4h 40m / 0h 10m    merge 5h 00m / 5h 00m
+  #127*  andres-co  ready day 16 (Wed) 14:00Z  review none, open 388h 00m / 189h 00m  approval -                  merge -
+  #129   ben-ny     ready day 17 (Thu) 13:00Z  review anke-dev 1h 00m / 1h 00m        approval 19h 20m / 3h 50m   merge 20h 00m / 8h 00m
+  #131   lucia-co   ready day 21 (Mon) 13:00Z  review maya-ny 0h 30m / 0h 30m         approval 0h 30m / 0h 30m    merge 1h 00m / 1h 00m
+  #132   anke-dev   ready day 22 (Tue) 15:00Z  review andres-co 1h 00m / 1h 00m       approval 1h 30m / 1h 30m    merge 17h 00m / 1h 30m
+  #133   maya-ny    ready day 23 (Wed) 12:45Z  review jonas-k 18h 20m / 2h 50m        approval 19h 15m / 3h 45m   merge 19h 45m / 7h 45m
+  #134   andres-co  ready day 25 (Fri) 22:00Z  review anke-dev 57h 10m / 0h 10m       approval 57h 10m / 0h 10m   merge 58h 00m / 1h 00m
+  #135   jonas-k    ready day 28 (Mon) 06:30Z  review ben-ny 6h 50m / 0h 20m          approval 8h 30m / 2h 00m    merge 9h 00m / 8h 00m
+  #136   ben-ny     ready day 29 (Tue) 14:00Z  review jonas-k 16h 15m / 0h 45m        approval 16h 15m / 0h 45m   merge 17h 00m / 7h 00m
+  #137   lucia-co   ready day 30 (Wed) 13:00Z  review anke-dev 1h 00m / 1h 00m        approval 2h 00m / 1h 00m    merge 3h 00m / 3h 00m
+  #138*  maya-ny    ready day 31 (Thu) 13:00Z  review lucia-co 28h 30m / 12h 00m      approval 28h 30m / 12h 00m  merge 29h 00m / 12h 00m
+  #139   anke-dev   ready day 32 (Fri) 07:30Z  review andres-co 7h 10m / 0h 40m       approval 7h 10m / 0h 40m    merge 8h 30m / 8h 00m
+  #140   jonas-k    ready day 32 (Fri) 08:10Z  review maya-ny 6h 40m / 2h 20m         approval -                  merge -
+
+note: left out: 2 pull requests opened by a bot: #109 and #130
+note: left out: 1 pull request opened by a login that is not in the team file: #117
+note: left out: 1 pull request never ready for review (still a draft): #128
+note: not a first review: 1 review by the author of the pull request
+note: not a first review: 1 review by a bot
+note: not a first review: 1 review never submitted (PENDING)
+note: not a first review: 1 review submitted before the pull request was first ready for review
+note: not a first review: 1 review by a login that is not in the team file
+note: 1 pull request has no list of issue events (#133): each is taken as ready from created_at, so one that began as a draft is counted from the moment it was opened
+
+RESULT: FAIL - 6 of 36 pull requests waited longer than 4h 00m of working hours for a first review

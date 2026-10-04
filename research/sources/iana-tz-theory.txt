@@ -1,0 +1,54 @@
+Source: https://www.iana.org/time-zones/theory
+
+IANA, Theory and pragmatics of the tz code and data
+
+Scope of the tz database
+
+[...]
+have more than two changes per year, these changes need not merely
+flip back and forth between two alternatives, and the rules themselves
+can change at times.
+Whether and when a timezone changes its clock,
+and even the timezone's notional base offset from UTC,
+are variable.
+It does not always make sense to talk about a timezone's
+"base offset", which is not necessarily a single number.
+
+Timezone identifiers
+
+Each timezone has a name that uniquely identifies the timezone.
+Inexperienced users are not expected to select these names unaided.
+
+[...]
+
+Names normally have the format
+AREA/LOCATION, where
+AREA is a continent or ocean, and
+LOCATION is a specific location within the area.
+North and South America share the same area, America.
+Typical names are Africa/Cairo,
+America/New_York, and Pacific/Honolulu.
+Some names are further qualified to help avoid confusion; for example,
+America/Indiana/Petersburg distinguishes Petersburg,
+Indiana from other Petersburgs in America.
+
+[...]
+
+    Do not use names that differ only in case.
+    Although the reference implementation is case-sensitive, some
+    other implementations are not, and they would mishandle names
+    differing only in case.
+
+[...]
+
+The database defines each timezone name to be a zone, or a link to a zone.
+The source file backward defines links
+and a few zones for backward compatibility.
+
+[...]
+
+One of etcetera's names is Etc/UTC,
+used by functions like gmtime to obtain leap
+second information on platforms that support leap seconds.
+Another etcetera name, GMT,
+is used by older code releases.
