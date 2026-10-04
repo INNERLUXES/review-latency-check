@@ -1,0 +1,50 @@
+{
+  "name": "review-latency-check",
+  "version": "1.0.0",
+  "description": "Measures how long code reviews wait in a team spread over time zones, from pull request data saved from the GitHub REST API: the wait for the first review, the first approval and the merge, on the clock on the wall and in the working hours of the person who ended the wait, in their own time zone, with the median and a nearest-rank percentile for every pair of author zone and reviewer zone. Flags the pull requests whose first review waited past the limit of the configuration. Calls no API, needs no token, reads no clock; time zone math with the Intl API of Node only; logins only, no dependencies.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "bin": {
+    "review-latency-check": "bin/review-latency-check.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "docs",
+    "examples",
+    "research",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"test/*.test.js\"",
+    "test:coverage": "node --test --experimental-test-coverage \"test/*.test.js\"",
+    "check": "node tools/check.mjs",
+    "example": "node tools/example.mjs"
+  },
+  "keywords": [
+    "code-review",
+    "pull-requests",
+    "review-latency",
+    "time-zones",
+    "working-hours",
+    "distributed-teams",
+    "nearshore",
+    "github",
+    "ci",
+    "cli"
+  ],
+  "author": "INNERLUXES <info@innerluxes.dev>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/INNERLUXES/review-latency-check.git"
+  },
+  "homepage": "https://innerluxes.dev/software-development/nearshore"
+}
